@@ -1,0 +1,51 @@
+{
+  "name": "languess",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "npx tsx src/db/seed.ts",
+    "db:seed:achievements": "npx tsx src/db/seed-achievements.ts"
+  },
+  "dependencies": {
+    "@auth/drizzle-adapter": "^1.11.1",
+    "bcryptjs": "^3.0.3",
+    "clsx": "latest",
+    "drizzle-orm": "^0.45.1",
+    "fast-levenshtein": "^3.0.0",
+    "framer-motion": "^11.5.4",
+    "next": "^16.1.4",
+    "next-auth": "^5.0.0-beta.30",
+    "postgres": "^3.4.8",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwind-merge": "latest",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/fast-levenshtein": "^0.0.4",
+    "@types/node": "^20.11.18",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "latest",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.8",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "postcss": "latest",
+    "tailwindcss": "3.4.17",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.2.0"
+  }
+}
