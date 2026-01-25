@@ -47,6 +47,7 @@ npx drizzle-kit push
 ### 6. Dodaj przykładowe dane
 ```bash
 npx tsx src/db/seed.ts
+npx tsx src/db/seed-achievements.ts ## ten tu skurwysyn achievements nie dziala bo wgl achievementsy n dzialaja jak cos xd! 
 ```
 
 ### 7. Odpal!
@@ -74,7 +75,7 @@ src/
 
 ## Technologie
 
-- **Next.js 16** - fullstack framework
+- **Next.js 16** - fullstack framework      # muli nwm czemu
 - **Drizzle ORM** - dostęp do bazy
 - **PostgreSQL** - baza danych
 - **NextAuth.js** - autentykacja
