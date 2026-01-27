@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useSession } from 'next-auth/react';
 import { SidebarBackground } from '@/components/SidebarBackground';
 import { Button } from '@/components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -47,6 +48,7 @@ const QUESTIONS_PER_DIFFICULTY = {
 };
 
 export default function GamePage() {
+    const { data: session } = useSession();
     const router = useRouter();
     const [gamePhase, setGamePhase] = useState<GamePhase>('playing');
     const [gameState, setGameState] = useState<GameState>({
@@ -109,16 +111,20 @@ export default function GamePage() {
 
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
-                if (prev <= 1) {
-                    handleTimeout();
-                    return 12;
-                }
+                if (prev <= 0) return 0;
                 return prev - 1;
             });
         }, 1000);
 
         return () => clearInterval(timer);
     }, [loading, showResult, gamePhase]);
+
+    useEffect(() => {
+        if (timeLeft === 0 && !showResult && !loading && gamePhase === 'playing') {
+            handleTimeout();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [timeLeft, showResult, loading, gamePhase]);
 
     const handleTimeout = () => {
         if (!question) return;
@@ -158,13 +164,12 @@ export default function GamePage() {
         const correct = languageCode === question.correctLanguageCode;
         setIsCorrect(correct);
 
-        // Calculate score based on time left
-        const timeBonus = correct ? Math.floor(timeLeft * 10) : 0;
-        const baseScore = correct ? 100 : 0;
+        // Calculate score: 10 points per correct answer
+        const scoreToAdd = correct ? 10 : 0;
 
         setGameState((prev) => ({
             ...prev,
-            score: prev.score + baseScore + timeBonus,
+            score: prev.score + scoreToAdd,
             correctAnswers: prev.correctAnswers + (correct ? 1 : 0),
             rounds: [
                 ...prev.rounds,
@@ -205,12 +210,18 @@ export default function GamePage() {
     };
 
     const saveScore = async () => {
+        // Only save score if user is logged in
+        if (!session?.user?.id) {
+            console.log('Guest user - score not saved');
+            return;
+        }
+
         try {
             await fetch('/api/game/save-score', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    userId: 'guest',
+                    userId: session.user.id,
                     difficulty: gameState.difficulty,
                     totalScore: gameState.score,
                     questionsCount: gameState.totalQuestions,
@@ -223,7 +234,7 @@ export default function GamePage() {
     };
 
     const timeColor = timeLeft > 7 ? '#8BC34A' : timeLeft > 3 ? '#FCD34D' : '#EF4444';
-    const timePercentage = (timeLeft / totalTime) * 100;
+    const timePercentage = showResult ? 0 : (timeLeft / totalTime) * 100;
     const accuracy = gameState.rounds.length > 0
         ? Math.round((gameState.correctAnswers / gameState.rounds.length) * 100)
         : 0;
@@ -436,14 +447,14 @@ export default function GamePage() {
 
                                     <div className="flex-1 w-full bg-gray-100 rounded-2xl h-14 relative overflow-hidden shadow-inner border border-gray-200">
                                         <div
-                                            className="absolute top-0 left-0 h-full transition-all duration-1000 ease-linear"
+                                            className={`absolute top-0 left-0 h-full ${showResult ? '' : 'transition-all duration-1000 ease-linear'}`}
                                             style={{
-                                                backgroundColor: timeColor,
-                                                width: `${timePercentage}%`
+                                                backgroundColor: showResult ? 'transparent' : timeColor,
+                                                width: showResult ? '0%' : `${timePercentage}%`
                                             }}
                                         />
                                         <div className="absolute inset-0 flex items-center justify-center">
-                                            <span className="font-bold text-[#2d3e1b] text-lg z-10">{timeLeft} s</span>
+                                            <span className="font-bold text-[#2d3e1b] text-lg z-10">{showResult ? '0' : timeLeft} s</span>
                                         </div>
                                     </div>
                                 </div>

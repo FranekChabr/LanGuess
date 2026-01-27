@@ -1,8 +1,24 @@
 import { config } from 'dotenv';
-config({ path: '.env.local' });
+config({ path: '.env' });
 
-import { db } from './index';
-import { achievements, type NewAchievement } from './schema';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import { achievements } from './schema';
+
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+    throw new Error('DATABASE_URL environment variable is not set');
+}
+
+const queryClient = postgres(connectionString);
+const db = drizzle(queryClient);
+
+interface NewAchievement {
+    id: string;
+    name: string;
+    description: string;
+    xpReward: number;
+}
 
 /**
  * Seed data for achievements table.

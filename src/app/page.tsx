@@ -40,10 +40,10 @@ export default function LandingPage() {
                         className="text-center mb-4"
                     >
                         <h1 className="text-3xl md:text-4xl font-bold text-[#2d3e1b] mb-2">
-                            Master Languages
+                            Ćwicz języki
                         </h1>
                         <p className="text-lg text-[#4F6F2F] font-medium">
-                            Test your knowledge, challenge yourself
+                            Ucz się języków, baw się i rozwijaj swoje umiejętności!
                         </p>
                     </motion.div>
 
@@ -60,7 +60,7 @@ export default function LandingPage() {
                                 fullWidth
                                 className="bg-[#2d3e1b] text-white text-xl py-5 shadow-lg hover:shadow-xl hover:bg-[#1f2a14] transform hover:scale-105 transition-all"
                             >
-                                Login / Register
+                                Zaloguj się / Zarejestruj
                             </Button>
                         </Link>
 
@@ -70,7 +70,7 @@ export default function LandingPage() {
                                 fullWidth
                                 className="bg-white text-[#3A5220] border-4 border-[#3A5220] text-xl py-5 hover:bg-gray-50 shadow-md hover:shadow-lg transform hover:scale-105 transition-all"
                             >
-                                Play as Guest
+                                Graj jako gość
                             </Button>
                         </Link>
                     </motion.div>
@@ -86,19 +86,19 @@ export default function LandingPage() {
                             <div className="w-12 h-12 mx-auto mb-2 bg-[#8BC34A] rounded-full flex items-center justify-center">
                                 <span className="text-white font-bold text-lg">A</span>
                             </div>
-                            <p className="text-xs text-[#4F6F2F] font-semibold">Multiple Languages</p>
+                            <p className="text-xs text-[#4F6F2F] font-semibold">Wiele <br /> języków</p>
                         </div>
                         <div className="flex-1">
                             <div className="w-12 h-12 mx-auto mb-2 bg-[#8BC34A] rounded-full flex items-center justify-center">
                                 <span className="text-white font-bold text-lg">⚡</span>
                             </div>
-                            <p className="text-xs text-[#4F6F2F] font-semibold">Fast-Paced</p>
+                            <p className="text-xs text-[#4F6F2F] font-semibold">Szybka rozgrywka</p>
                         </div>
                         <div className="flex-1">
                             <div className="w-12 h-12 mx-auto mb-2 bg-[#8BC34A] rounded-full flex items-center justify-center">
                                 <span className="text-white font-bold text-lg">★</span>
                             </div>
-                            <p className="text-xs text-[#4F6F2F] font-semibold">Track Progress</p>
+                            <p className="text-xs text-[#4F6F2F] font-semibold">Śledzenie postępów</p>
                         </div>
                     </motion.div>
                 </motion.div>

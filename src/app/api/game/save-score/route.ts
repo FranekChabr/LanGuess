@@ -43,17 +43,18 @@ interface UserStats {
     currentScore: number;
     correctAnswers: number;
     totalQuestions: number;
+    isPerfectGame: boolean; // current game was perfect
 }
 
 // Define achievement conditions
 const ACHIEVEMENT_CONDITIONS: AchievementCondition[] = [
     {
         id: 'first_game',
-        check: (stats) => stats.gamesPlayed === 1,
+        check: (stats) => stats.gamesPlayed >= 1, // First game or any game if not yet unlocked
     },
     {
         id: 'perfect_game',
-        check: (stats) => stats.correctAnswers === stats.totalQuestions && stats.totalQuestions >= 5,
+        check: (stats) => stats.isPerfectGame && stats.totalQuestions >= 5,
     },
     {
         id: 'level_5',
@@ -124,15 +125,28 @@ export async function POST(request: NextRequest) {
         const { userId, difficulty, totalScore, questionsCount, rounds } = parsed.data;
 
         // Calculate correct answers from rounds
-        const correctAnswers = rounds?.filter((r) => r.isCorrect).length ?? 0;
+        const correctAnswers = rounds?.filter((r) => r.isCorrect === true).length ?? 0;
+        
+        // Debug logging
+        console.log('[SAVE-SCORE] Rounds:', rounds?.length, 'Correct:', correctAnswers, 'Total:', questionsCount);
+        console.log('[SAVE-SCORE] isPerfectGame check:', correctAnswers, '===', questionsCount, '=', correctAnswers === questionsCount);
+        
+        // Determine if game was won (50% or more correct answers)
+        const accuracy = questionsCount > 0 ? correctAnswers / questionsCount : 0;
+        const isWin = accuracy >= 0.5;
+        
+        // Only award XP if the game was won
+        // Win bonus: +20 XP added to score from correct answers
+        const winBonus = 20;
+        const xpToAward = isWin ? totalScore + winBonus : 0;
 
         // Use transaction for all database operations
         const result = await db.transaction(async (tx) => {
-            // 1. Create game session
+            // 1. Create game session (always save the session for history)
             const sessionData: NewGameSession = {
                 userId,
                 difficulty,
-                totalScore,
+                totalScore: xpToAward, // Store actually awarded XP
                 questionsCount,
             };
 
@@ -169,8 +183,8 @@ export async function POST(request: NextRequest) {
                 throw new Error('User not found');
             }
 
-            // 4. Calculate new stats
-            const newTotalXp = currentUser.totalXp + totalScore;
+            // 4. Calculate new stats (only add XP if game was won)
+            const newTotalXp = currentUser.totalXp + xpToAward;
             const newGamesPlayed = currentUser.gamesPlayed + 1;
             const newPlayerLevel = calculateLevel(newTotalXp);
 
@@ -185,13 +199,15 @@ export async function POST(request: NextRequest) {
                 .where(eq(users.id, userId));
 
             // 6. Check and unlock achievements
+            const isPerfectGame = correctAnswers === questionsCount;
             const userStats: UserStats = {
                 gamesPlayed: newGamesPlayed,
                 totalXp: newTotalXp,
                 playerLevel: newPlayerLevel,
-                currentScore: totalScore,
+                currentScore: xpToAward,
                 correctAnswers,
                 totalQuestions: questionsCount,
+                isPerfectGame,
             };
 
             // Get user's existing achievements
@@ -238,6 +254,8 @@ export async function POST(request: NextRequest) {
             return {
                 gameSessionId: newSession.id,
                 newAchievements: newlyUnlocked,
+                isWin,
+                xpAwarded: xpToAward,
                 updatedStats: {
                     totalXp: newTotalXp,
                     playerLevel: newPlayerLevel,

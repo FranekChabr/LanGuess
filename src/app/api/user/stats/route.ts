@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/db';
-import { users } from '@/db/schema';
+import { users, userAchievements, achievements } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
 // XP thresholds for each level
@@ -46,12 +46,26 @@ export async function GET() {
 
         const levelInfo = calculateLevel(user.totalXp);
 
+        // Fetch user's unlocked achievements
+        const unlockedAchievements = await db
+            .select({
+                id: achievements.id,
+                name: achievements.name,
+                description: achievements.description,
+                xpReward: achievements.xpReward,
+                unlockedAt: userAchievements.unlockedAt,
+            })
+            .from(userAchievements)
+            .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
+            .where(eq(userAchievements.userId, session.user.id));
+
         return NextResponse.json({
             totalXp: user.totalXp,
             level: levelInfo.level,
             currentXp: levelInfo.currentXp,
             xpForNextLevel: levelInfo.xpForNextLevel,
             gamesPlayed: user.gamesPlayed,
+            achievements: unlockedAchievements,
         });
     } catch (error) {
         console.error('Error fetching user stats:', error);

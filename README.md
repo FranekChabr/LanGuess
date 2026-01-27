@@ -80,4 +80,3 @@ src/
 - **PostgreSQL** - baza danych
 - **NextAuth.js** - autentykacja
 - **Tailwind CSS** - stylowanie
-### jd kx
