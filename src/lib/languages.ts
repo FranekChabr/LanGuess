@@ -1,32 +1,74 @@
-/**
+﻿/**
  * Available languages for the LanGuess game.
  * Used for generating distractors and validating answers.
  */
 export const AVAILABLE_LANGUAGES = [
     { code: 'pl', name: 'Polski', nameEn: 'Polish' },
-    { code: 'en', name: 'English', nameEn: 'English' },
-    { code: 'de', name: 'Deutsch', nameEn: 'German' },
-    { code: 'ja', name: '日本語', nameEn: 'Japanese' },
-    { code: 'ko', name: '한국어', nameEn: 'Korean' },
-    { code: 'zh', name: '中文', nameEn: 'Chinese' },
-    { code: 'es', name: 'Español', nameEn: 'Spanish' },
-    { code: 'fr', name: 'Français', nameEn: 'French' },
-    { code: 'it', name: 'Italiano', nameEn: 'Italian' },
-    { code: 'pt', name: 'Português', nameEn: 'Portuguese' },
-    { code: 'ru', name: 'Русский', nameEn: 'Russian' },
-    { code: 'uk', name: 'Українська', nameEn: 'Ukrainian' },
-    { code: 'ar', name: 'العربية', nameEn: 'Arabic' },
-    { code: 'hi', name: 'हिन्दी', nameEn: 'Hindi' },
-    { code: 'th', name: 'ไทย', nameEn: 'Thai' },
-    { code: 'vi', name: 'Tiếng Việt', nameEn: 'Vietnamese' },
-    { code: 'nl', name: 'Nederlands', nameEn: 'Dutch' },
-    { code: 'sv', name: 'Svenska', nameEn: 'Swedish' },
-    { code: 'fi', name: 'Suomi', nameEn: 'Finnish' },
-    { code: 'cs', name: 'Čeština', nameEn: 'Czech' },
-    { code: 'tr', name: 'Türkçe', nameEn: 'Turkish' },
-    { code: 'el', name: 'Ελληνικά', nameEn: 'Greek' },
-    { code: 'he', name: 'עברית', nameEn: 'Hebrew' },
-    { code: 'id', name: 'Bahasa Indonesia', nameEn: 'Indonesian' },
+    { code: 'en', name: 'Angielski', nameEn: 'English' },
+    { code: 'de', name: 'Niemiecki', nameEn: 'German' },
+    { code: 'ja', name: 'Japoński', nameEn: 'Japanese' },
+    { code: 'ko', name: 'Koreański', nameEn: 'Korean' },
+    { code: 'zh', name: 'Chiński', nameEn: 'Chinese' },
+    { code: 'es', name: 'Hiszpański', nameEn: 'Spanish' },
+    { code: 'fr', name: 'Francuski', nameEn: 'French' },
+    { code: 'it', name: 'Włoski', nameEn: 'Italian' },
+    { code: 'pt', name: 'Portugalski', nameEn: 'Portuguese' },
+    { code: 'ru', name: 'Rosyjski', nameEn: 'Russian' },
+    { code: 'uk', name: 'Ukraiński', nameEn: 'Ukrainian' },
+    { code: 'ar', name: 'Arabski', nameEn: 'Arabic' },
+    { code: 'hi', name: 'Hindi', nameEn: 'Hindi' },
+    { code: 'th', name: 'Tajski', nameEn: 'Thai' },
+    { code: 'vi', name: 'Wietnamski', nameEn: 'Vietnamese' },
+    { code: 'nl', name: 'Niderlandzki', nameEn: 'Dutch' },
+    { code: 'sv', name: 'Szwedzki', nameEn: 'Swedish' },
+    { code: 'fi', name: 'Fiński', nameEn: 'Finnish' },
+    { code: 'cs', name: 'Czeski', nameEn: 'Czech' },
+    { code: 'tr', name: 'Turecki', nameEn: 'Turkish' },
+    { code: 'el', name: 'Grecki', nameEn: 'Greek' },
+    { code: 'he', name: 'Hebrajski', nameEn: 'Hebrew' },
+    { code: 'id', name: 'Indonezyjski', nameEn: 'Indonesian' },
+    { code: 'da', name: 'Duński', nameEn: 'Danish' },
+    { code: 'no', name: 'Norweski', nameEn: 'Norwegian' },
+    { code: 'sk', name: 'Słowacki', nameEn: 'Slovak' },
+    { code: 'bg', name: 'Bułgarski', nameEn: 'Bulgarian' },
+    { code: 'ro', name: 'Rumuński', nameEn: 'Romanian' },
+    { code: 'hu', name: 'Węgierski', nameEn: 'Hungarian' },
+    { code: 'lt', name: 'Litewski', nameEn: 'Lithuanian' },
+    { code: 'lv', name: 'Łotewski', nameEn: 'Latvian' },
+    { code: 'fa', name: 'Perski', nameEn: 'Persian' },
+    { code: 'tl', name: 'Filipiński', nameEn: 'Filipino' },
+    { code: 'ur', name: 'Urdu', nameEn: 'Urdu' },
+    { code: 'bn', name: 'Bengalski', nameEn: 'Bengali' },
+    { code: 'ms', name: 'Malajski', nameEn: 'Malay' },
+    { code: 'si', name: 'Syngaleski', nameEn: 'Sinhala' },
+    { code: 'ka', name: 'Gruziński', nameEn: 'Georgian' },
+    { code: 'sr', name: 'Serbski', nameEn: 'Serbian' },
+    { code: 'et', name: 'Estonski', nameEn: 'Estonian' },
+    { code: 'is', name: 'Islandzki', nameEn: 'Icelandic' },
+    { code: 'lb', name: 'Luksemburski', nameEn: 'Luxembourgish' },
+    { code: 'ga', name: 'Irlandzki', nameEn: 'Irish' },
+    { code: 'cy', name: 'Walijski', nameEn: 'Welsh' },
+    { code: 'ca', name: 'Kataloński', nameEn: 'Catalan' },
+    { code: 'mn', name: 'Mongolski', nameEn: 'Mongolian' },
+    { code: 'rom', name: 'Romski', nameEn: 'Romani' },
+    { code: 'eu', name: 'Baskijski', nameEn: 'Basque' },
+    { code: 'sq', name: 'Albański', nameEn: 'Albanian' },
+    { code: 'bs', name: 'Bośniacki', nameEn: 'Bosnian' },
+    { code: 'hr', name: 'Chorwacki', nameEn: 'Croatian' },
+    { code: 'sl', name: 'Słoweński', nameEn: 'Slovenian' },
+    { code: 'mk', name: 'Macedoński', nameEn: 'Macedonian' },
+    { code: 'be', name: 'Białoruski', nameEn: 'Belarusian' },
+    { code: 'tk', name: 'Turkmeński', nameEn: 'Turkmen' },
+    { code: 'ky', name: 'Kirgiski', nameEn: 'Kyrgyz' },
+    { code: 'tg', name: 'Tadżycki', nameEn: 'Tajik' },
+    { code: 'uz', name: 'Uzbecki', nameEn: 'Uzbek' },
+    { code: 'lo', name: 'Laotański', nameEn: 'Lao' },
+    { code: 'kk', name: 'Kazachski', nameEn: 'Kazakh' },
+    { code: 'my', name: 'Birmański', nameEn: 'Burmese' },
+    { code: 'hy', name: 'Ormiański', nameEn: 'Armenian' },
+    { code: 'ne', name: 'Nepalski', nameEn: 'Nepali' },
+    { code: 'km', name: 'Khmerski', nameEn: 'Khmer' },
+    { code: 'az', name: 'Azerbejdżański', nameEn: 'Azerbaijani' },
 ] as const;
 
 export type LanguageCode = (typeof AVAILABLE_LANGUAGES)[number]['code'];
@@ -50,6 +92,14 @@ export function getLanguageByCode(code: string): Language | undefined {
 export function getLanguageNameEn(code: string): string {
     const lang = getLanguageByCode(code);
     return lang?.nameEn ?? code;
+}
+
+/**
+ * Get language name (in Polish) by code
+ */
+export function getLanguageName(code: string): string {
+    const lang = getLanguageByCode(code);
+    return lang?.name ?? code;
 }
 
 /**

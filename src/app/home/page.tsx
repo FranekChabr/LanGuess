@@ -163,7 +163,7 @@ export default function HomePage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto w-full">
                         {/* Classic Mode Card */}
                         <Link
-                            href="/game"
+                            href="/game?level=easy"
                             className="bg-white border-4 border-[#8BC34A] rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
                         >
                             <div className="w-60 h-60 flex items-center justify-center overflow-hidden">
@@ -178,27 +178,31 @@ export default function HomePage() {
                             </h3>
                         </Link>
 
-                        {/* Coming Soon Mode 1 */}
-                        <div className="bg-white border-4 border-gray-300 rounded-3xl p-8 flex flex-col items-center gap-6 shadow-lg opacity-60 cursor-not-allowed">
-                            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center border-4 border-gray-200">
-                                <span className="text-7xl text-gray-400">?</span>
+                        {/* Intermediate Mode */}
+                        <Link
+                            href="/game?level=intermediate"
+                            className="bg-white border-4 border-amber-400 rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
+                        >
+                            <div className="w-32 h-32 bg-amber-50 rounded-full flex items-center justify-center border-4 border-amber-200 group-hover:border-amber-400 transition-colors">
+                                <span className="text-5xl group-hover:scale-110 transition-transform">🌍</span>
                             </div>
-                            <div className="text-center">
-                                <h3 className="text-gray-400 font-bold text-2xl mb-1">Coming Soon</h3>
-                                <p className="text-sm text-gray-400">New mode in development</p>
-                            </div>
-                        </div>
+                            <h3 className="text-amber-600 font-bold text-2xl group-hover:text-amber-700 transition-colors">
+                                Intermediate
+                            </h3>
+                        </Link>
 
-                        {/* Coming Soon Mode 2 */}
-                        <div className="bg-white border-4 border-gray-300 rounded-3xl p-8 flex flex-col items-center gap-6 shadow-lg opacity-60 cursor-not-allowed">
-                            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center border-4 border-gray-200">
-                                <span className="text-7xl text-gray-400">?</span>
+                        {/* Expert Mode */}
+                        <Link
+                            href="/game?level=expert"
+                            className="bg-white border-4 border-purple-400 rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
+                        >
+                            <div className="w-32 h-32 bg-purple-50 rounded-full flex items-center justify-center border-4 border-purple-200 group-hover:border-purple-400 transition-colors">
+                                <span className="text-5xl group-hover:scale-110 transition-transform">🏆</span>
                             </div>
-                            <div className="text-center">
-                                <h3 className="text-gray-400 font-bold text-2xl mb-1">Coming Soon</h3>
-                                <p className="text-sm text-gray-400">New mode in development</p>
-                            </div>
-                        </div>
+                            <h3 className="text-purple-600 font-bold text-2xl group-hover:text-purple-700 transition-colors">
+                                Expert
+                            </h3>
+                        </Link>
                     </div>
                 </div>
 

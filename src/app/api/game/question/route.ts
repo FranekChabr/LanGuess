@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { QuestionService } from '@/lib/question-service';
-import { generateOptions, getLanguageNameEn } from '@/lib/languages';
+import { generateOptions, getLanguageName } from '@/lib/languages';
 import { z } from 'zod';
 import type { Difficulty } from '@/db/schema';
 
+// Game levels - these map to difficulty combinations
+export type GameLevel = 'easy' | 'medium' | 'hard' | 'intermediate' | 'expert';
+
 // Query params validation - created once, reused
 const QuerySchema = z.object({
-    level: z.enum(['easy', 'medium', 'hard']).default('easy'),
+    level: z.enum(['easy', 'medium', 'hard', 'intermediate', 'expert']).default('easy'),
+    excludedLanguages: z.string().optional(), // comma-separated language codes
 });
 
 // Response headers for caching
@@ -22,9 +26,10 @@ const CACHE_HEADERS = {
 export async function GET(request: NextRequest) {
     try {
         const levelParam = request.nextUrl.searchParams.get('level') || 'easy';
+        const excludedParam = request.nextUrl.searchParams.get('excludedLanguages') || '';
 
         // Validate query params
-        const parsed = QuerySchema.safeParse({ level: levelParam });
+        const parsed = QuerySchema.safeParse({ level: levelParam, excludedLanguages: excludedParam });
         if (!parsed.success) {
             return NextResponse.json(
                 { error: 'Invalid level parameter. Must be: easy, medium, or hard.' },
@@ -32,16 +37,21 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        const { level } = parsed.data;
+        const { level, excludedLanguages } = parsed.data;
+        
+        // Parse excluded languages into array
+        const excludedArray = excludedLanguages 
+            ? excludedLanguages.split(',').filter(code => code.trim())
+            : [];
 
-        // Get question from QuestionService
-        const question = await QuestionService.getQuestion(level as Difficulty);
+        // Get question from QuestionService (supports mixed difficulty levels)
+        const question = await QuestionService.getQuestionByGameLevel(level as GameLevel, excludedArray);
 
         // Generate 4 options (1 correct + 3 distractors)
         const options = generateOptions(question.correctLanguage, 4);
 
-        // Get the English name for the correct answer
-        const correctLanguageName = getLanguageNameEn(question.correctLanguage);
+        // Get the Polish name for the correct answer
+        const correctLanguageName = getLanguageName(question.correctLanguage);
 
         return NextResponse.json(
             {

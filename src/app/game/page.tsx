@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { SidebarBackground } from '@/components/SidebarBackground';
 import { Button } from '@/components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { AVAILABLE_LANGUAGES } from '@/lib/languages';
 
 interface Language {
     code: string;
@@ -25,7 +26,7 @@ interface GameState {
     currentQuestion: number;
     totalQuestions: number;
     score: number;
-    difficulty: 'easy' | 'medium' | 'hard';
+    difficulty: 'easy' | 'medium' | 'hard' | 'intermediate' | 'expert';
     correctAnswers: number;
     rounds: RoundData[];
 }
@@ -45,17 +46,36 @@ const QUESTIONS_PER_DIFFICULTY = {
     easy: 8,
     medium: 12,
     hard: 15,
+    intermediate: 10,
+    expert: 12,
+};
+
+// Points per correct answer based on difficulty
+const POINTS_PER_ANSWER = {
+    easy: 10,
+    medium: 10,
+    hard: 10,
+    intermediate: 20,
+    expert: 40,
 };
 
 export default function GamePage() {
     const { data: session } = useSession();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    
+    // Get level from URL params, default to 'easy'
+    const levelParam = searchParams.get('level') as GameState['difficulty'] | null;
+    const initialLevel = levelParam && ['easy', 'medium', 'hard', 'intermediate', 'expert'].includes(levelParam) 
+        ? levelParam 
+        : 'easy';
+    
     const [gamePhase, setGamePhase] = useState<GamePhase>('playing');
     const [gameState, setGameState] = useState<GameState>({
         currentQuestion: 1,
-        totalQuestions: QUESTIONS_PER_DIFFICULTY.easy,
+        totalQuestions: QUESTIONS_PER_DIFFICULTY[initialLevel],
         score: 0,
-        difficulty: 'easy',
+        difficulty: initialLevel,
         correctAnswers: 0,
         rounds: [],
     });
@@ -70,6 +90,26 @@ export default function GamePage() {
     const [timeLeft, setTimeLeft] = useState(12);
     const totalTime = 12;
     const [startTime, setStartTime] = useState<number>(Date.now());
+    
+    // Track used languages to avoid repetition
+    const [usedLanguages, setUsedLanguages] = useState<string[]>([]);
+    
+    // Expert mode text input state
+    const [expertInput, setExpertInput] = useState('');
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const suggestionsRef = useRef<HTMLDivElement>(null);
+
+    // Filter languages based on expert input
+    const filteredLanguages = useMemo(() => {
+        if (!expertInput.trim()) return [];
+        const searchTerm = expertInput.toLowerCase().trim();
+        return AVAILABLE_LANGUAGES.filter(lang => 
+            lang.nameEn.toLowerCase().startsWith(searchTerm) ||
+            lang.name.toLowerCase().startsWith(searchTerm)
+        ).slice(0, 6); // Limit to 6 suggestions
+    }, [expertInput]);
 
     // Fetch question from API
     const fetchQuestion = useCallback(async () => {
@@ -79,14 +119,26 @@ export default function GamePage() {
         setTimeLeft(12);
         setStartTime(Date.now());
         setQuestionKey((prev) => prev + 1);
+        setExpertInput(''); // Reset expert input
+        setShowSuggestions(false);
+        setSelectedSuggestionIndex(-1);
 
         try {
-            const response = await fetch(`/api/game/question?level=${gameState.difficulty}`);
+            // Build URL with excluded languages
+            const excludedParam = usedLanguages.length > 0 
+                ? `&excludedLanguages=${usedLanguages.join(',')}`
+                : '';
+            const response = await fetch(`/api/game/question?level=${gameState.difficulty}${excludedParam}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch question');
             }
             const data = await response.json();
             setQuestion(data);
+            
+            // Track the language as used
+            if (data.correctLanguageCode) {
+                setUsedLanguages(prev => [...prev, data.correctLanguageCode]);
+            }
         } catch (error) {
             console.error('Error fetching question:', error);
             setQuestion({
@@ -98,7 +150,7 @@ export default function GamePage() {
         } finally {
             setLoading(false);
         }
-    }, [gameState.difficulty]);
+    }, [gameState.difficulty, usedLanguages]);
 
     // Load first question on mount
     useEffect(() => {
@@ -164,8 +216,8 @@ export default function GamePage() {
         const correct = languageCode === question.correctLanguageCode;
         setIsCorrect(correct);
 
-        // Calculate score: 10 points per correct answer
-        const scoreToAdd = correct ? 10 : 0;
+        // Calculate score based on difficulty level
+        const scoreToAdd = correct ? POINTS_PER_ANSWER[gameState.difficulty] : 0;
 
         setGameState((prev) => ({
             ...prev,
@@ -186,6 +238,84 @@ export default function GamePage() {
         setTimeout(() => {
             moveToNextQuestion();
         }, 1500);
+    };
+
+    // Handle expert mode text input submission
+    const handleExpertSubmit = (selectedLanguage?: typeof AVAILABLE_LANGUAGES[0]) => {
+        if (showResult || !question) return;
+        
+        const languageToSubmit = selectedLanguage || filteredLanguages[0];
+        if (!languageToSubmit) return;
+        
+        const languageCode = languageToSubmit.code;
+        const timeTaken = (Date.now() - startTime) / 1000;
+        
+        // Set the full language name in the input field
+        setExpertInput(languageToSubmit.name);
+        setSelectedAnswer(languageCode);
+        setShowResult(true);
+        setShowSuggestions(false);
+
+        const correct = languageCode === question.correctLanguageCode;
+        setIsCorrect(correct);
+
+        const scoreToAdd = correct ? POINTS_PER_ANSWER[gameState.difficulty] : 0;
+
+        setGameState((prev) => ({
+            ...prev,
+            score: prev.score + scoreToAdd,
+            correctAnswers: prev.correctAnswers + (correct ? 1 : 0),
+            rounds: [
+                ...prev.rounds,
+                {
+                    targetLanguage: question.correctLanguageCode,
+                    sentence: question.sentence,
+                    userAnswer: languageCode,
+                    isCorrect: correct,
+                    timeTaken,
+                },
+            ],
+        }));
+
+        setTimeout(() => {
+            moveToNextQuestion();
+        }, 1500);
+    };
+
+    // Handle keyboard navigation in suggestions
+    const handleExpertKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!showSuggestions || filteredLanguages.length === 0) {
+            if (e.key === 'Enter' && filteredLanguages.length > 0) {
+                e.preventDefault();
+                handleExpertSubmit();
+            }
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                setSelectedSuggestionIndex(prev => 
+                    prev < filteredLanguages.length - 1 ? prev + 1 : prev
+                );
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setSelectedSuggestionIndex(prev => prev > 0 ? prev - 1 : -1);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (selectedSuggestionIndex >= 0) {
+                    handleExpertSubmit(filteredLanguages[selectedSuggestionIndex]);
+                } else if (filteredLanguages.length > 0) {
+                    handleExpertSubmit(filteredLanguages[0]);
+                }
+                break;
+            case 'Escape':
+                setShowSuggestions(false);
+                setSelectedSuggestionIndex(-1);
+                break;
+        }
     };
 
     const moveToNextQuestion = () => {
@@ -353,12 +483,13 @@ export default function GamePage() {
                                 onClick={() => {
                                     setGameState({
                                         currentQuestion: 1,
-                                        totalQuestions: QUESTIONS_PER_DIFFICULTY.easy,
+                                        totalQuestions: QUESTIONS_PER_DIFFICULTY[initialLevel],
                                         score: 0,
-                                        difficulty: 'easy',
+                                        difficulty: initialLevel,
                                         correctAnswers: 0,
                                         rounds: [],
                                     });
+                                    setUsedLanguages([]); // Reset used languages for new game
                                     setGamePhase('playing');
                                     fetchQuestion();
                                 }}
@@ -386,12 +517,12 @@ export default function GamePage() {
     }
 
     return (
-        <div className="flex min-h-screen overflow-hidden">
+        <div className="flex h-screen overflow-hidden">
             {Sidebar}
 
-            <div className="flex-1 relative flex flex-col p-4 bg-gradient-to-br from-white via-[#f0fdf4] to-[#e8f5e9]">
+            <div className="flex-1 relative flex flex-col p-4 pt-2 bg-gradient-to-br from-white via-[#f0fdf4] to-[#e8f5e9] overflow-hidden">
                 {/* Top Navigation */}
-                <div className="w-full max-w-4xl mx-auto flex justify-between items-center mb-6 pt-4 relative z-10">
+                <div className="w-full max-w-4xl mx-auto flex justify-between items-center mb-2 relative z-10">
                     <Link
                         href="/home"
                         className="flex items-center gap-2 text-[#4F6F2F] font-bold hover:text-[#2d3e1b] transition-colors bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm hover:bg-white/80"
@@ -404,7 +535,7 @@ export default function GamePage() {
                 </div>
 
                 {/* Main Game Container */}
-                <div className="flex-1 flex flex-col justify-center items-center w-full max-w-4xl mx-auto relative z-10">
+                <div className="flex-1 flex flex-col justify-start items-center w-full max-w-4xl mx-auto relative z-10 pt-4">
                     <AnimatePresence mode="wait">
                         {gamePhase === 'transition' ? (
                             <motion.div
@@ -412,7 +543,7 @@ export default function GamePage() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="flex items-center justify-center"
+                                className="flex items-center justify-center mt-20"
                             >
                                 <motion.div
                                     animate={{ rotate: 360 }}
@@ -427,7 +558,7 @@ export default function GamePage() {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -100 }}
                                 transition={{ duration: 0.4, ease: 'easeOut' }}
-                                className="w-full bg-white/80 backdrop-blur-md border-2 border-white/50 rounded-[3rem] p-6 md:p-10 shadow-2xl flex flex-col gap-8"
+                                className="w-full bg-white/80 backdrop-blur-md border-2 border-white/50 rounded-[3rem] p-5 md:p-8 shadow-2xl flex flex-col gap-6"
                             >
                                 {/* Stats Bar */}
                                 <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -460,7 +591,7 @@ export default function GamePage() {
                                 </div>
 
                                 {/* Question Display */}
-                                <div className="py-10 md:py-16 text-center relative">
+                                <div className="py-6 md:py-10 text-center relative">
                                     <span className="absolute top-0 left-1/2 -translate-x-1/2 text-xs font-bold text-[#8BC34A] uppercase tracking-[0.2em] select-none">
                                         Jaki to język?
                                     </span>
@@ -478,57 +609,153 @@ export default function GamePage() {
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 0.4 }}
-                                            className="text-4xl md:text-6xl font-black text-[#2d3e1b] leading-tight select-none cursor-default"
+                                            className="text-3xl md:text-5xl font-black text-[#2d3e1b] leading-tight select-none cursor-default"
                                         >
                                             {question?.sentence}
                                         </motion.h2>
                                     )}
                                 </div>
 
-                                {/* Answers Grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {question?.options.map((option, index) => (
-                                        <motion.button
-                                            key={option.code}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.1 }}
-                                            whileHover={!showResult ? { scale: 1.02 } : {}}
-                                            whileTap={!showResult ? { scale: 0.98 } : {}}
-                                            onClick={() => handleAnswerClick(option.code)}
-                                            disabled={showResult}
-                                            className={`group relative ${getButtonStyle(option.code)} rounded-[1.5rem] p-6 text-left shadow-lg hover:shadow-xl transition-all duration-300`}
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                <motion.div
-                                                    animate={
-                                                        showResult && option.code === question?.correctLanguageCode
-                                                            ? { scale: [1, 1.2, 1] }
-                                                            : {}
+                                {/* Expert Mode Text Input */}
+                                {gameState.difficulty === 'expert' ? (
+                                    <div className="relative">
+                                        <div className="relative">
+                                            <input
+                                                ref={inputRef}
+                                                type="text"
+                                                value={expertInput}
+                                                onChange={(e) => {
+                                                    setExpertInput(e.target.value);
+                                                    setShowSuggestions(true);
+                                                    setSelectedSuggestionIndex(-1);
+                                                }}
+                                                onKeyDown={handleExpertKeyDown}
+                                                onFocus={() => setShowSuggestions(true)}
+                                                onBlur={() => {
+                                                    // Delay to allow click on suggestion
+                                                    setTimeout(() => setShowSuggestions(false), 200);
+                                                }}
+                                                disabled={showResult}
+                                                placeholder="Wpisz nazwę języka..."
+                                                className={`w-full px-6 py-5 text-xl font-bold rounded-2xl border-2 transition-all duration-300 outline-none
+                                                    ${showResult 
+                                                        ? isCorrect 
+                                                            ? 'bg-green-50 border-green-500 text-green-700' 
+                                                            : 'bg-red-50 border-red-500 text-red-700'
+                                                        : 'bg-white border-[#8BC34A]/30 text-[#2d3e1b] focus:border-[#8BC34A] focus:ring-4 focus:ring-[#8BC34A]/20'
                                                     }
-                                                    transition={{ duration: 0.3 }}
-                                                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${showResult && option.code === question?.correctLanguageCode
-                                                        ? 'bg-green-500 text-white'
-                                                        : showResult && option.code === selectedAnswer && !isCorrect
-                                                            ? 'bg-red-500 text-white'
-                                                            : 'bg-[#e8f5e9] text-[#4F6F2F] group-hover:bg-[#8BC34A] group-hover:text-white'
-                                                        }`}
-                                                >
-                                                    {showResult && option.code === question?.correctLanguageCode ? (
-                                                        '✓'
-                                                    ) : showResult && option.code === selectedAnswer && !isCorrect ? (
-                                                        '✗'
+                                                    placeholder:text-gray-400`}
+                                                autoComplete="off"
+                                            />
+                                            {/* Search icon */}
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                                                {showResult ? (
+                                                    isCorrect ? (
+                                                        <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                                                            <span className="text-white font-bold">✓</span>
+                                                        </div>
                                                     ) : (
-                                                        String.fromCharCode(65 + index)
-                                                    )}
-                                                </motion.div>
-                                                <span className="text-lg md:text-xl font-bold text-[#2d3e1b]">
-                                                    {option.nameEn}
-                                                </span>
+                                                        <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
+                                                            <span className="text-white font-bold">✗</span>
+                                                        </div>
+                                                    )
+                                                ) : (
+                                                    <svg className="w-6 h-6 text-[#8BC34A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                    </svg>
+                                                )}
                                             </div>
-                                        </motion.button>
-                                    ))}
-                                </div>
+                                        </div>
+
+                                        {/* Autocomplete Suggestions */}
+                                        <AnimatePresence>
+                                            {showSuggestions && filteredLanguages.length > 0 && !showResult && (
+                                                <motion.div
+                                                    ref={suggestionsRef}
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -10 }}
+                                                    transition={{ duration: 0.2 }}
+                                                    className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl border-2 border-[#8BC34A]/20 overflow-hidden"
+                                                >
+                                                    {filteredLanguages.map((lang, index) => (
+                                                        <motion.button
+                                                            key={lang.code}
+                                                            initial={{ opacity: 0, x: -20 }}
+                                                            animate={{ opacity: 1, x: 0 }}
+                                                            transition={{ delay: index * 0.05 }}
+                                                            onClick={() => handleExpertSubmit(lang)}
+                                                            className={`w-full px-6 py-4 text-left flex items-center gap-4 transition-all duration-200
+                                                                ${selectedSuggestionIndex === index 
+                                                                    ? 'bg-[#8BC34A] text-white' 
+                                                                    : 'hover:bg-[#f0fdf4] text-[#2d3e1b]'
+                                                                }`}
+                                                        >
+                                                            <span className="font-bold text-lg">{lang.name}</span>
+                                                        </motion.button>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        {/* Show correct answer after result */}
+                                        {showResult && !isCorrect && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="mt-4 text-center"
+                                            >
+                                                <span className="text-gray-500">Poprawna odpowiedź: </span>
+                                                <span className="font-bold text-[#2d3e1b]">{question?.correctLanguageName}</span>
+                                            </motion.div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    /* Answers Grid for non-expert modes */
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {question?.options.map((option, index) => (
+                                            <motion.button
+                                                key={option.code}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: index * 0.1 }}
+                                                whileHover={!showResult ? { scale: 1.02 } : {}}
+                                                whileTap={!showResult ? { scale: 0.98 } : {}}
+                                                onClick={() => handleAnswerClick(option.code)}
+                                                disabled={showResult}
+                                                className={`group relative ${getButtonStyle(option.code)} rounded-[1.5rem] p-6 text-left shadow-lg hover:shadow-xl transition-all duration-300`}
+                                            >
+                                                <div className="flex items-center gap-4">
+                                                    <motion.div
+                                                        animate={
+                                                            showResult && option.code === question?.correctLanguageCode
+                                                                ? { scale: [1, 1.2, 1] }
+                                                                : {}
+                                                        }
+                                                        transition={{ duration: 0.3 }}
+                                                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${showResult && option.code === question?.correctLanguageCode
+                                                            ? 'bg-green-500 text-white'
+                                                            : showResult && option.code === selectedAnswer && !isCorrect
+                                                                ? 'bg-red-500 text-white'
+                                                                : 'bg-[#e8f5e9] text-[#4F6F2F] group-hover:bg-[#8BC34A] group-hover:text-white'
+                                                            }`}
+                                                    >
+                                                        {showResult && option.code === question?.correctLanguageCode ? (
+                                                            '✓'
+                                                        ) : showResult && option.code === selectedAnswer && !isCorrect ? (
+                                                            '✗'
+                                                        ) : (
+                                                            String.fromCharCode(65 + index)
+                                                        )}
+                                                    </motion.div>
+                                                    <span className="text-lg md:text-xl font-bold text-[#2d3e1b]">
+                                                        {option.name}
+                                                    </span>
+                                                </div>
+                                            </motion.button>
+                                        ))}
+                                    </div>
+                                )}
                             </motion.div>
                         )}
                     </AnimatePresence>
