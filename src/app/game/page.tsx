@@ -368,6 +368,9 @@ export default function GamePage() {
     const accuracy = gameState.rounds.length > 0
         ? Math.round((gameState.correctAnswers / gameState.rounds.length) * 100)
         : 0;
+    const averageTime = gameState.rounds.length > 0
+        ? (gameState.rounds.reduce((sum, round) => sum + round.timeTaken, 0) / gameState.rounds.length).toFixed(1)
+        : '0.0';
 
     const Sidebar = useMemo(
         () => (
@@ -435,8 +438,8 @@ export default function GamePage() {
                                 <div className="text-sm text-[#4F6F2F] font-semibold">Punkty</div>
                             </div>
                             <div className="bg-[#f0fdf4] rounded-2xl p-6 text-center border border-[#8BC34A]/20">
-                                <div className="text-4xl font-black text-[#2d3e1b]">{accuracy}%</div>
-                                <div className="text-sm text-[#4F6F2F] font-semibold">Trafność</div>
+                                <div className="text-4xl font-black text-[#2d3e1b]">{averageTime}s</div>
+                                <div className="text-sm text-[#4F6F2F] font-semibold">Śr. czas</div>
                             </div>
                             <div className="bg-[#f0fdf4] rounded-2xl p-6 text-center border border-[#8BC34A]/20 col-span-2 md:col-span-1">
                                 <div className="text-4xl font-black text-[#2d3e1b]">

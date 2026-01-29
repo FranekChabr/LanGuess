@@ -5,8 +5,20 @@ import { Button } from '@/components/Button';
 import { SidebarBackground } from '@/components/SidebarBackground';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function LandingPage() {
+    const { data: session } = useSession();
+    const router = useRouter();
+
+    const handleGuestPlay = async () => {
+        if (session) {
+            await signOut({ redirect: false });
+        }
+        router.push('/home');
+    };
+
     return (
         <div className="flex min-h-screen">
             {/* Left Sidebar with animated letters */}
@@ -64,15 +76,14 @@ export default function LandingPage() {
                             </Button>
                         </Link>
 
-                        <Link href="/home" className="block">
-                            <Button
-                                variant="outline"
-                                fullWidth
-                                className="bg-white text-[#3A5220] border-4 border-[#3A5220] text-xl py-5 hover:bg-gray-50 shadow-md hover:shadow-lg transform hover:scale-105 transition-all"
-                            >
-                                Graj jako gość
-                            </Button>
-                        </Link>
+                        <Button
+                            variant="outline"
+                            fullWidth
+                            onClick={handleGuestPlay}
+                            className="bg-white text-[#3A5220] border-4 border-[#3A5220] text-xl py-5 hover:bg-gray-50 shadow-md hover:shadow-lg transform hover:scale-105 transition-all"
+                        >
+                            Graj jako gość
+                        </Button>
                     </motion.div>
 
                     {/* Feature highlights */}
