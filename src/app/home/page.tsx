@@ -161,20 +161,20 @@ export default function HomePage() {
 
                     {/* Game Modes Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto w-full">
-                        {/* Classic Mode Card */}
+                        {/* Noob Mode Card */}
                         <Link
                             href="/game?level=easy"
                             className="bg-white border-4 border-[#8BC34A] rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
                         >
                             <div className="w-60 h-60 flex items-center justify-center overflow-hidden">
                                 <img
-                                    src="/cba5a9e1-a9ed-4ab5-b530-a12a2a7511fb.png"
-                                    alt="Classic Mode"
+                                    src="/noob.jpg"
+                                    alt="Noob Mode"
                                     className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                                 />
                             </div>
                             <h3 className="text-[#8BC34A] font-bold text-2xl group-hover:text-[#6B8E23] transition-colors">
-                                Classic
+                                Noob
                             </h3>
                         </Link>
 
