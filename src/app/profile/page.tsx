@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { SidebarBackground } from '@/components/SidebarBackground';
 import { Button } from '@/components/Button';
@@ -139,18 +139,27 @@ export default function ProfilePage() {
                 <div className="max-w-4xl mx-auto w-full">
                     
                     {/* Header with Back Button */}
-                    <div className="flex items-center gap-4 mb-6">
-                        <Link 
-                            href="/home"
-                            className="p-2 rounded-full hover:bg-gray-100 transition-colors text-[#4F6F2F]"
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                            <Link 
+                                href="/home"
+                                className="p-2 rounded-full hover:bg-gray-100 transition-colors text-[#4F6F2F]"
+                            >
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                            </Link>
+                            <h1 className="text-3xl font-bold text-[#2d3e1b]">
+                                Edytuj Profil
+                            </h1>
+                        </div>
+                        <Button 
+                            onClick={() => signOut({ callbackUrl: '/' })}
+                            variant="outline"
+                            className="!border-red-500 !text-red-500 hover:!bg-red-50 !py-2 !px-6 !text-base"
                         >
-                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                        </Link>
-                        <h1 className="text-3xl font-bold text-[#2d3e1b]">
-                            Edytuj Profil
-                        </h1>
+                            Wyloguj się
+                        </Button>
                     </div>
 
                     <div className="bg-white border-2 border-[#e5e7eb] rounded-3xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row gap-8 items-start">

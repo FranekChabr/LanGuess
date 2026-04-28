@@ -33,13 +33,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
                 // Validate email format
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email.length > 255) {
+                    throw new Error('Email jest zbyt długi (maks. 255 znaków)');
+                }
                 if (!emailRegex.test(email)) {
                     throw new Error('Nieprawidłowy format email');
                 }
 
-                // Validate password length
-                if (password.length < 6) {
-                    throw new Error('Hasło musi mieć minimum 6 znaków');
+                // Validate password
+                if (password.length < 8) {
+                    throw new Error('Hasło musi mieć minimum 8 znaków');
+                }
+                if (!/[A-Z]/.test(password)) {
+                    throw new Error('Hasło musi zawierać co najmniej jedną wielką literę');
+                }
+                if (!/\d/.test(password)) {
+                    throw new Error('Hasło musi zawierać co najmniej jedną cyfrę');
+                }
+                if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                    throw new Error('Hasło musi zawierać co najmniej jeden znak specjalny');
                 }
 
                 // Find user by email

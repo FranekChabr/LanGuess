@@ -18,6 +18,12 @@ export async function POST(request: Request) {
 
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email.length > 255) {
+            return NextResponse.json(
+                { error: 'Email jest zbyt długi (maks. 255 znaków)' },
+                { status: 400 }
+            );
+        }
         if (!emailRegex.test(email)) {
             return NextResponse.json(
                 { error: 'Nieprawidłowy format email' },
@@ -25,10 +31,28 @@ export async function POST(request: Request) {
             );
         }
 
-        // Validate password length
-        if (password.length < 6) {
+        // Validate password
+        if (password.length < 8) {
             return NextResponse.json(
-                { error: 'Hasło musi mieć minimum 6 znaków' },
+                { error: 'Hasło musi mieć minimum 8 znaków' },
+                { status: 400 }
+            );
+        }
+        if (!/[A-Z]/.test(password)) {
+            return NextResponse.json(
+                { error: 'Hasło musi zawierać co najmniej jedną wielką literę' },
+                { status: 400 }
+            );
+        }
+        if (!/\d/.test(password)) {
+            return NextResponse.json(
+                { error: 'Hasło musi zawierać co najmniej jedną cyfrę' },
+                { status: 400 }
+            );
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return NextResponse.json(
+                { error: 'Hasło musi zawierać co najmniej jeden znak specjalny' },
                 { status: 400 }
             );
         }

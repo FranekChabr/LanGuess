@@ -25,6 +25,9 @@ export default function LoginPage() {
         if (!email) {
             return 'Email jest wymagany';
         }
+        if (email.length > 255) {
+            return 'Email jest zbyt długi (maks. 255 znaków)';
+        }
         if (!emailRegex.test(email)) {
             return 'Nieprawidłowy format email';
         }
@@ -33,8 +36,17 @@ export default function LoginPage() {
         if (!password) {
             return 'Hasło jest wymagane';
         }
-        if (password.length < 6) {
-            return 'Hasło musi mieć minimum 6 znaków';
+        if (password.length < 8) {
+            return 'Hasło musi mieć minimum 8 znaków';
+        }
+        if (!/[A-Z]/.test(password)) {
+            return 'Hasło musi zawierać co najmniej jedną wielką literę';
+        }
+        if (!/\d/.test(password)) {
+            return 'Hasło musi zawierać co najmniej jedną cyfrę';
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return 'Hasło musi zawierać co najmniej jeden znak specjalny';
         }
 
         // Confirm password for registration
@@ -205,7 +217,7 @@ export default function LoginPage() {
                             <Input
                                 label="Hasło"
                                 type="password"
-                                placeholder="Minimum 6 znaków"
+                                placeholder="Min. 8 znaków, cyfra i znak spec."
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
