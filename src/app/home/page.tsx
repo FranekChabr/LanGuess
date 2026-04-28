@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Logo } from '@/components/Logo';
 import { SidebarBackground } from '@/components/SidebarBackground';
@@ -49,9 +49,8 @@ export default function HomePage() {
 
                     {/* User Profile in Sidebar */}
                     <div className="relative z-10 w-full px-6 pb-4">
-                        <Link 
-                            href={isLoggedIn ? "/profile" : "/login"}
-                            className="block bg-white/95 backdrop-blur-sm border-4 border-white rounded-3xl p-4 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#8BC34A] cursor-pointer group"
+                        <div 
+                            className="block bg-white/95 backdrop-blur-sm border-4 border-white rounded-3xl p-4 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#8BC34A] group"
                         >
                             {isLoggedIn ? (
                                 <div className="flex flex-col items-center w-full">
@@ -95,10 +94,26 @@ export default function HomePage() {
                                                 {xpForNextLevel - currentXP} EXP do poziomu {userLevel + 1}
                                             </p>
                                         </div>
+
+                                        {/* Action Buttons */}
+                                        <div className="w-full mt-4 flex flex-col gap-2">
+                                            <Link 
+                                                href="/profile"
+                                                className="w-full py-2 bg-[#4F6F2F] text-white rounded-xl font-bold text-center border-2 border-[#2d3e1b] hover:bg-[#3A5220] transition-colors"
+                                            >
+                                                Profil
+                                            </Link>
+                                            <button 
+                                                onClick={() => signOut({ callbackUrl: '/' })}
+                                                className="w-full py-2 bg-gray-100 text-gray-600 rounded-xl font-bold text-center border-2 border-gray-300 hover:bg-gray-200 transition-colors"
+                                            >
+                                                Wyloguj
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="flex flex-col items-center w-full gap-3">
+                                <Link href="/login" className="flex flex-col items-center w-full gap-3 cursor-pointer">
                                     {/* Guest avatar */}
                                     <div className="w-20 h-20 bg-gray-200 rounded-full border-4 border-gray-300 flex items-center justify-center shadow-lg overflow-hidden group-hover:scale-105 transition-all duration-300">
                                         <svg className="w-16 h-16 text-gray-400 mt-4" viewBox="0 0 24 24" fill="currentColor">
@@ -112,9 +127,9 @@ export default function HomePage() {
                                             Zaloguj się żeby odkryć więcej
                                         </span>
                                     </div>
-                                </div>
+                                </Link>
                             )}
-                        </Link>
+                        </div>
                     </div>
                 </div>
 
@@ -173,9 +188,14 @@ export default function HomePage() {
                                     className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                                 />
                             </div>
-                            <h3 className="text-[#8BC34A] font-bold text-2xl group-hover:text-[#6B8E23] transition-colors">
-                                Noob
-                            </h3>
+                            <div className="flex flex-col items-center gap-2">
+                                <h3 className="text-[#8BC34A] font-bold text-2xl group-hover:text-[#6B8E23] transition-colors">
+                                    Noob
+                                </h3>
+                                <p className="text-sm text-center text-gray-600 font-medium">
+                                    Podstawowe zdanka. Dobre na rozgrzewkę.
+                                </p>
+                            </div>
                         </Link>
 
                         {/* Intermediate Mode */}
@@ -190,9 +210,14 @@ export default function HomePage() {
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                             </div>
-                            <h3 className="text-amber-600 font-bold text-2xl group-hover:text-amber-700 transition-colors">
-                                Intermediate
-                            </h3>
+                            <div className="flex flex-col items-center gap-2">
+                                <h3 className="text-amber-600 font-bold text-2xl group-hover:text-amber-700 transition-colors">
+                                    Intermediate
+                                </h3>
+                                <p className="text-sm text-center text-gray-600 font-medium">
+                                    Mniej znane języki. Wymaga skupienia.
+                                </p>
+                            </div>
                         </Link>
 
                         {/* Expert Mode */}
@@ -207,9 +232,14 @@ export default function HomePage() {
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                             </div>
-                            <h3 className="text-purple-600 font-bold text-2xl group-hover:text-purple-700 transition-colors">
-                                Expert
-                            </h3>
+                            <div className="flex flex-col items-center gap-2">
+                                <h3 className="text-purple-600 font-bold text-2xl group-hover:text-purple-700 transition-colors">
+                                    Expert
+                                </h3>
+                                <p className="text-sm text-center text-gray-600 font-medium">
+                                    Tylko dla poliglotów. Egzotyczne alfabety.
+                                </p>
+                            </div>
                         </Link>
                     </div>
                 </div>
