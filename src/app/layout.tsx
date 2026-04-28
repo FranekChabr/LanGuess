@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     title: 'LanGuess - Language Guessing Game',
     description: 'Test your language recognition skills! Guess the language of sentences from around the world.',
     keywords: ['language', 'game', 'quiz', 'learning', 'polyglot'],
+    icons: {
+        icon: '/favicon.svg',
+    },
 };
 
 export default function RootLayout({

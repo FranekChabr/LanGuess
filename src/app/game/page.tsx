@@ -100,6 +100,19 @@ export default function GamePage() {
     const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const suggestionsRef = useRef<HTMLDivElement>(null);
+    
+    // Audio preloading
+    const clickAudioRef = useRef<HTMLAudioElement | null>(null);
+    const winAudioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            clickAudioRef.current = new Audio('/game_click.mp3');
+            clickAudioRef.current.preload = 'auto';
+            winAudioRef.current = new Audio('/game_won.mp3');
+            winAudioRef.current.preload = 'auto';
+        }
+    }, []);
 
     // Filter languages based on expert input
     const filteredLanguages = useMemo(() => {
@@ -178,6 +191,16 @@ export default function GamePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timeLeft, showResult, loading, gamePhase]);
 
+    // Play win sound when game finishes with at least 7 correct answers
+    useEffect(() => {
+        if (gamePhase === 'summary' && gameState.correctAnswers >= 7) {
+            if (winAudioRef.current) {
+                winAudioRef.current.currentTime = 0;
+                winAudioRef.current.play().catch(e => console.error('Audio play failed:', e));
+            }
+        }
+    }, [gamePhase, gameState.correctAnswers]);
+
     const handleTimeout = () => {
         if (!question) return;
 
@@ -214,6 +237,12 @@ export default function GamePage() {
         setShowResult(true);
 
         const correct = languageCode === question.correctLanguageCode;
+        if (correct) {
+            if (clickAudioRef.current) {
+                clickAudioRef.current.currentTime = 0;
+                clickAudioRef.current.play().catch(e => console.error('Audio play failed:', e));
+            }
+        }
         setIsCorrect(correct);
 
         // Calculate score based on difficulty level
@@ -241,7 +270,7 @@ export default function GamePage() {
     };
 
     // Handle expert mode text input submission
-    const handleExpertSubmit = (selectedLanguage?: typeof AVAILABLE_LANGUAGES[0]) => {
+    const handleExpertSubmit = (selectedLanguage?: Language) => {
         if (showResult || !question) return;
         
         const languageToSubmit = selectedLanguage || filteredLanguages[0];
@@ -257,6 +286,12 @@ export default function GamePage() {
         setShowSuggestions(false);
 
         const correct = languageCode === question.correctLanguageCode;
+        if (correct) {
+            if (clickAudioRef.current) {
+                clickAudioRef.current.currentTime = 0;
+                clickAudioRef.current.play().catch(e => console.error('Audio play failed:', e));
+            }
+        }
         setIsCorrect(correct);
 
         const scoreToAdd = correct ? POINTS_PER_ANSWER[gameState.difficulty] : 0;

@@ -183,8 +183,12 @@ export default function HomePage() {
                             href="/game?level=intermediate"
                             className="bg-white border-4 border-amber-400 rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
                         >
-                            <div className="w-32 h-32 bg-amber-50 rounded-full flex items-center justify-center border-4 border-amber-200 group-hover:border-amber-400 transition-colors">
-                                <span className="text-5xl group-hover:scale-110 transition-transform">🌍</span>
+                            <div className="w-60 h-60 flex items-center justify-center overflow-hidden rounded-2xl">
+                                <img
+                                    src="/intermediate.jpg"
+                                    alt="Intermediate Mode"
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                />
                             </div>
                             <h3 className="text-amber-600 font-bold text-2xl group-hover:text-amber-700 transition-colors">
                                 Intermediate
@@ -196,8 +200,12 @@ export default function HomePage() {
                             href="/game?level=expert"
                             className="bg-white border-4 border-purple-400 rounded-3xl p-8 flex flex-col items-center gap-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg group overflow-hidden"
                         >
-                            <div className="w-32 h-32 bg-purple-50 rounded-full flex items-center justify-center border-4 border-purple-200 group-hover:border-purple-400 transition-colors">
-                                <span className="text-5xl group-hover:scale-110 transition-transform">🏆</span>
+                            <div className="w-60 h-60 flex items-center justify-center overflow-hidden rounded-2xl">
+                                <img
+                                    src="/expert.jpg"
+                                    alt="Expert Mode"
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                />
                             </div>
                             <h3 className="text-purple-600 font-bold text-2xl group-hover:text-purple-700 transition-colors">
                                 Expert
