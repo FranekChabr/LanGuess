@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
         const question = await QuestionService.getQuestionByGameLevel(level as GameLevel, excludedArray);
 
         // Generate 4 options (1 correct + 3 distractors)
-        const options = generateOptions(question.correctLanguage, 4);
+        const options = generateOptions(question.correctLanguage, 4, level);
 
         // Get the Polish name for the correct answer
         const correctLanguageName = getLanguageName(question.correctLanguage);

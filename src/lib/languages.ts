@@ -3,72 +3,72 @@
  * Used for generating distractors and validating answers.
  */
 export const AVAILABLE_LANGUAGES = [
-    { code: 'pl', name: 'Polski', nameEn: 'Polish' },
-    { code: 'en', name: 'Angielski', nameEn: 'English' },
-    { code: 'de', name: 'Niemiecki', nameEn: 'German' },
-    { code: 'ja', name: 'Japoński', nameEn: 'Japanese' },
-    { code: 'ko', name: 'Koreański', nameEn: 'Korean' },
-    { code: 'zh', name: 'Chiński', nameEn: 'Chinese' },
-    { code: 'es', name: 'Hiszpański', nameEn: 'Spanish' },
-    { code: 'fr', name: 'Francuski', nameEn: 'French' },
-    { code: 'it', name: 'Włoski', nameEn: 'Italian' },
-    { code: 'pt', name: 'Portugalski', nameEn: 'Portuguese' },
-    { code: 'ru', name: 'Rosyjski', nameEn: 'Russian' },
-    { code: 'uk', name: 'Ukraiński', nameEn: 'Ukrainian' },
-    { code: 'ar', name: 'Arabski', nameEn: 'Arabic' },
-    { code: 'hi', name: 'Hindi', nameEn: 'Hindi' },
-    { code: 'th', name: 'Tajski', nameEn: 'Thai' },
-    { code: 'vi', name: 'Wietnamski', nameEn: 'Vietnamese' },
-    { code: 'nl', name: 'Niderlandzki', nameEn: 'Dutch' },
-    { code: 'sv', name: 'Szwedzki', nameEn: 'Swedish' },
-    { code: 'fi', name: 'Fiński', nameEn: 'Finnish' },
-    { code: 'cs', name: 'Czeski', nameEn: 'Czech' },
-    { code: 'tr', name: 'Turecki', nameEn: 'Turkish' },
-    { code: 'el', name: 'Grecki', nameEn: 'Greek' },
-    { code: 'he', name: 'Hebrajski', nameEn: 'Hebrew' },
-    { code: 'id', name: 'Indonezyjski', nameEn: 'Indonesian' },
-    { code: 'da', name: 'Duński', nameEn: 'Danish' },
-    { code: 'no', name: 'Norweski', nameEn: 'Norwegian' },
-    { code: 'sk', name: 'Słowacki', nameEn: 'Slovak' },
-    { code: 'bg', name: 'Bułgarski', nameEn: 'Bulgarian' },
-    { code: 'ro', name: 'Rumuński', nameEn: 'Romanian' },
-    { code: 'hu', name: 'Węgierski', nameEn: 'Hungarian' },
-    { code: 'lt', name: 'Litewski', nameEn: 'Lithuanian' },
-    { code: 'lv', name: 'Łotewski', nameEn: 'Latvian' },
-    { code: 'fa', name: 'Perski', nameEn: 'Persian' },
-    { code: 'tl', name: 'Filipiński', nameEn: 'Filipino' },
-    { code: 'ur', name: 'Urdu', nameEn: 'Urdu' },
-    { code: 'bn', name: 'Bengalski', nameEn: 'Bengali' },
-    { code: 'ms', name: 'Malajski', nameEn: 'Malay' },
-    { code: 'si', name: 'Syngaleski', nameEn: 'Sinhala' },
-    { code: 'ka', name: 'Gruziński', nameEn: 'Georgian' },
-    { code: 'sr', name: 'Serbski', nameEn: 'Serbian' },
-    { code: 'et', name: 'Estonski', nameEn: 'Estonian' },
-    { code: 'is', name: 'Islandzki', nameEn: 'Icelandic' },
-    { code: 'lb', name: 'Luksemburski', nameEn: 'Luxembourgish' },
-    { code: 'ga', name: 'Irlandzki', nameEn: 'Irish' },
-    { code: 'cy', name: 'Walijski', nameEn: 'Welsh' },
-    { code: 'ca', name: 'Kataloński', nameEn: 'Catalan' },
-    { code: 'mn', name: 'Mongolski', nameEn: 'Mongolian' },
-    { code: 'rom', name: 'Romski', nameEn: 'Romani' },
-    { code: 'eu', name: 'Baskijski', nameEn: 'Basque' },
-    { code: 'sq', name: 'Albański', nameEn: 'Albanian' },
-    { code: 'bs', name: 'Bośniacki', nameEn: 'Bosnian' },
-    { code: 'hr', name: 'Chorwacki', nameEn: 'Croatian' },
-    { code: 'sl', name: 'Słoweński', nameEn: 'Slovenian' },
-    { code: 'mk', name: 'Macedoński', nameEn: 'Macedonian' },
-    { code: 'be', name: 'Białoruski', nameEn: 'Belarusian' },
-    { code: 'tk', name: 'Turkmeński', nameEn: 'Turkmen' },
-    { code: 'ky', name: 'Kirgiski', nameEn: 'Kyrgyz' },
-    { code: 'tg', name: 'Tadżycki', nameEn: 'Tajik' },
-    { code: 'uz', name: 'Uzbecki', nameEn: 'Uzbek' },
-    { code: 'lo', name: 'Laotański', nameEn: 'Lao' },
-    { code: 'kk', name: 'Kazachski', nameEn: 'Kazakh' },
-    { code: 'my', name: 'Birmański', nameEn: 'Burmese' },
-    { code: 'hy', name: 'Ormiański', nameEn: 'Armenian' },
-    { code: 'ne', name: 'Nepalski', nameEn: 'Nepali' },
-    { code: 'km', name: 'Khmerski', nameEn: 'Khmer' },
-    { code: 'az', name: 'Azerbejdżański', nameEn: 'Azerbaijani' },
+    { code: 'pl', name: 'Polski', nameEn: 'Polish', family: 'slowianskie' },
+    { code: 'en', name: 'Angielski', nameEn: 'English', family: 'germanskie' },
+    { code: 'de', name: 'Niemiecki', nameEn: 'German', family: 'germanskie' },
+    { code: 'ja', name: 'Japoński', nameEn: 'Japanese', family: 'japońska' },
+    { code: 'ko', name: 'Koreański', nameEn: 'Korean', family: 'koreańska' },
+    { code: 'zh', name: 'Chiński', nameEn: 'Chinese', family: 'sino-tybetański' },
+    { code: 'es', name: 'Hiszpański', nameEn: 'Spanish', family: 'latino' },
+    { code: 'fr', name: 'Francuski', nameEn: 'French', family: 'latino' },
+    { code: 'it', name: 'Włoski', nameEn: 'Italian', family: 'latino' },
+    { code: 'pt', name: 'Portugalski', nameEn: 'Portuguese', family: 'latino' },
+    { code: 'ru', name: 'Rosyjski', nameEn: 'Russian', family: 'slowianskie' },
+    { code: 'uk', name: 'Ukraiński', nameEn: 'Ukrainian', family: 'slowianskie' },
+    { code: 'ar', name: 'Arabski', nameEn: 'Arabic', family: 'semicki' },
+    { code: 'hi', name: 'Hindi', nameEn: 'Hindi', family: 'Indoaryjski' },
+    { code: 'th', name: 'Tajski', nameEn: 'Thai', family: 'tai-kadai' },
+    { code: 'vi', name: 'Wietnamski', nameEn: 'Vietnamese', family: 'austroazjatycki' },
+    { code: 'nl', name: 'Niderlandzki', nameEn: 'Dutch', family: 'germanskie' },
+    { code: 'sv', name: 'Szwedzki', nameEn: 'Swedish', family: 'germanskie' },
+    { code: 'fi', name: 'Fiński', nameEn: 'Finnish', family: 'ugrofinskie' },
+    { code: 'cs', name: 'Czeski', nameEn: 'Czech', family: 'slowianskie' },
+    { code: 'tr', name: 'Turecki', nameEn: 'Turkish', family: 'inne' },
+    { code: 'el', name: 'Grecki', nameEn: 'Greek', family: 'inne' },
+    { code: 'he', name: 'Hebrajski', nameEn: 'Hebrew', family: 'semicki' },
+    { code: 'id', name: 'Indonezyjski', nameEn: 'Indonesian', family: 'austronezyjski' },
+    { code: 'da', name: 'Duński', nameEn: 'Danish', family: 'germanskie' },
+    { code: 'no', name: 'Norweski', nameEn: 'Norwegian', family: 'germanskie' },
+    { code: 'sk', name: 'Słowacki', nameEn: 'Slovak', family: 'slowianskie' },
+    { code: 'bg', name: 'Bułgarski', nameEn: 'Bulgarian', family: 'slowianskie' },
+    { code: 'ro', name: 'Rumuński', nameEn: 'Romanian', family: 'latino' },
+    { code: 'hu', name: 'Węgierski', nameEn: 'Hungarian', family: 'ugrofinskie' },
+    { code: 'lt', name: 'Litewski', nameEn: 'Lithuanian', family: 'baltyckie' },
+    { code: 'lv', name: 'Łotewski', nameEn: 'Latvian', family: 'baltyckie' },
+    { code: 'fa', name: 'Perski', nameEn: 'Persian', family: 'Indoaryjski' },
+    { code: 'tl', name: 'Filipiński', nameEn: 'Filipino', family: 'austronezyjski' },
+    { code: 'ur', name: 'Urdu', nameEn: 'Urdu', family: 'Indoaryjski' },
+    { code: 'bn', name: 'Bengalski', nameEn: 'Bengali', family: 'Indoaryjski' },
+    { code: 'ms', name: 'Malajski', nameEn: 'Malay', family: 'austronezyjski' },
+    { code: 'si', name: 'Syngaleski', nameEn: 'Sinhala', family: 'drawidyjski' },
+    { code: 'ka', name: 'Gruziński', nameEn: 'Georgian', family: 'kartwelska' },
+    { code: 'sr', name: 'Serbski', nameEn: 'Serbian', family: 'slowianskie' },
+    { code: 'et', name: 'Estonski', nameEn: 'Estonian', family: 'ugrofinskie' },
+    { code: 'is', name: 'Islandzki', nameEn: 'Icelandic', family: 'germanskie' },
+    { code: 'lb', name: 'Luksemburski', nameEn: 'Luxembourgish', family: 'germanskie' },
+    { code: 'ga', name: 'Irlandzki', nameEn: 'Irish', family: 'celtycki' },
+    { code: 'cy', name: 'Walijski', nameEn: 'Welsh', family: 'celtycki' },
+    { code: 'ca', name: 'Kataloński', nameEn: 'Catalan', family: 'latino' },
+    { code: 'mn', name: 'Mongolski', nameEn: 'Mongolian', family: 'mongolska' },
+    { code: 'rom', name: 'Romski', nameEn: 'Romani', family: 'inne' },
+    { code: 'eu', name: 'Baskijski', nameEn: 'Basque', family: 'inne' },
+    { code: 'sq', name: 'Albański', nameEn: 'Albanian', family: 'inne' },
+    { code: 'bs', name: 'Bośniacki', nameEn: 'Bosnian', family: 'slowianskie' },
+    { code: 'hr', name: 'Chorwacki', nameEn: 'Croatian', family: 'slowianskie' },
+    { code: 'sl', name: 'Słoweński', nameEn: 'Slovenian', family: 'slowianskie' },
+    { code: 'mk', name: 'Macedoński', nameEn: 'Macedonian', family: 'slowianskie' },
+    { code: 'be', name: 'Białoruski', nameEn: 'Belarusian', family: 'slowianskie' },
+    { code: 'tk', name: 'Turkmeński', nameEn: 'Turkmen', family: 'trukijski' },
+    { code: 'ky', name: 'Kirgiski', nameEn: 'Kyrgyz', family: 'trukijski' },
+    { code: 'tg', name: 'Tadżycki', nameEn: 'Tajik', family: 'Indoaryjski' },
+    { code: 'uz', name: 'Uzbecki', nameEn: 'Uzbek', family: 'trukijski' },
+    { code: 'lo', name: 'Laotański', nameEn: 'Lao', family: 'tai-kadai' },
+    { code: 'kk', name: 'Kazachski', nameEn: 'Kazakh', family: 'trukijski' },
+    { code: 'my', name: 'Birmański', nameEn: 'Burmese', family: 'sino-tybetański' },
+    { code: 'hy', name: 'Ormiański', nameEn: 'Armenian', family: 'inne' },
+    { code: 'ne', name: 'Nepalski', nameEn: 'Nepali', family: 'Indoaryjski' },
+    { code: 'km', name: 'Khmerski', nameEn: 'Khmer', family: 'austroazjatycki' },
+    { code: 'az', name: 'Azerbejdżański', nameEn: 'Azerbaijani', family: 'trukijski' },
 ] as const;
 
 export type LanguageCode = (typeof AVAILABLE_LANGUAGES)[number]['code'];
@@ -77,6 +77,7 @@ export interface Language {
     code: string;
     name: string;
     nameEn: string;
+    family: string;
 }
 
 /**
@@ -127,11 +128,13 @@ export function generateDistractors(
  * Generate all options (correct + distractors) in random order
  * @param correctLanguageCode - The correct language code
  * @param totalOptions - Total number of options (default 4)
+ * @param gameLevel - The current game level (e.g. 'intermediate')
  * @returns Array of language objects in random order
  */
 export function generateOptions(
     correctLanguageCode: string,
-    totalOptions: number = 4
+    totalOptions: number = 4,
+    gameLevel?: string
 ): Language[] {
     const correctLanguage = getLanguageByCode(correctLanguageCode);
 
@@ -142,11 +145,34 @@ export function generateOptions(
             code: correctLanguageCode,
             name: correctLanguageCode,
             nameEn: correctLanguageCode,
+            family: 'unknown'
         };
         return [...distractors, placeholder].sort(() => Math.random() - 0.5);
     }
 
-    const distractors = generateDistractors(correctLanguageCode, totalOptions - 1);
+    let distractors: Language[] = [];
+
+    if (gameLevel === 'intermediate') {
+        const familyLanguages = AVAILABLE_LANGUAGES.filter(
+            (lang) => lang.family === correctLanguage.family && lang.code !== correctLanguageCode
+        );
+        const otherFamilyLanguages = AVAILABLE_LANGUAGES.filter(
+            (lang) => lang.family !== correctLanguage.family && lang.code !== correctLanguageCode
+        );
+
+        // Wybieramy max 2 języki z tej samej rodziny (jeśli są)
+        const shuffledFamily = [...familyLanguages].sort(() => Math.random() - 0.5);
+        const familyDistractors = shuffledFamily.slice(0, 2);
+
+        // Uzupełniamy pozostałe miejsce dobierając języki z innej rodziny
+        const remainingSpots = totalOptions - 1 - familyDistractors.length;
+        const shuffledOthers = [...otherFamilyLanguages].sort(() => Math.random() - 0.5);
+        const otherDistractors = shuffledOthers.slice(0, remainingSpots);
+
+        distractors = [...familyDistractors, ...otherDistractors];
+    } else {
+        distractors = generateDistractors(correctLanguageCode, totalOptions - 1);
+    }
 
     // Combine correct answer with distractors and shuffle
     return [correctLanguage, ...distractors].sort(() => Math.random() - 0.5);
