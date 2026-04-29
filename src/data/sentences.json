@@ -922,5 +922,929 @@
     "languageCode": "sl",
     "difficulty": "hard",
     "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "W polskim słowie jest tyle szeleszczących spółgłosek, że obcokrajowcy myślą, że kichamy.",
+    "languageCode": "pl",
+    "difficulty": "easy",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Polak potrafi narzekać na pogodę tak poetycko, jakby to była nasza narodowa sztuka.",
+    "languageCode": "pl",
+    "difficulty": "easy",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "В русском можно составить невероятно эмоциональное предложение, используя производные одного матерного слова.",
+    "languageCode": "ru",
+    "difficulty": "easy",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Каждая бабушка искренне верит, что ты умираешь от голода, даже съев целую кастрюлю пельменей.",
+    "languageCode": "ru",
+    "difficulty": "easy",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Wir können Wörter so unglaublich lang machen, dass man eine kurze Kaffeepause einlegen muss.",
+    "languageCode": "de",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Pünktlichkeit bedeutet, fünf Minuten zu früh zu sein; wer pünktlich ist, ist schon zu spät.",
+    "languageCode": "de",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "On met plein de lettres à la fin des mots, mais on refuse catégoriquement de les prononcer.",
+    "languageCode": "fr",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "Même pour râler parce que le train est en retard, le français a l'air d'un poème.",
+    "languageCode": "fr",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "Our spelling rules are just polite suggestions borrowed from different historical languages.",
+    "languageCode": "en",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "A Brit will sincerely apologize to a table if they accidentally bump into it.",
+    "languageCode": "en",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "如果你把声调发错，你可能在叫别人妈妈，或骂人是一匹马。",
+    "languageCode": "zh",
+    "difficulty": "easy",
+    "languageFamily": "sino-tybetaski"
+  },
+  {
+    "id": 4,
+    "content": "无论你生什么病或遇到烦心事，长辈的医疗处方永远是“多喝热水”。",
+    "languageCode": "zh",
+    "difficulty": "easy",
+    "languageFamily": "sino-tybetaski"
+  },
+  {
+    "id": 3,
+    "content": "Hablamos tan rápido que a veces ni nosotros mismos sabemos qué acabamos de decir.",
+    "languageCode": "es",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "La siesta y comer tapas con los amigos no son solo costumbres, son una religión absoluta.",
+    "languageCode": "es",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "Para os estrangeiros, o português de Portugal soa sempre como um espanhol a tentar falar russo.",
+    "languageCode": "pt",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "Conseguimos sentir \"saudade\" de coisas, e curamos isso a comer bacalhau.",
+    "languageCode": "pt",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "Δεν μπορούμε να μιλήσουμε με δεμένα χέρια, γιατί η γραμματική βρίσκεται στις χειρονομίες.",
+    "languageCode": "el",
+    "difficulty": "easy",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Ο Γιάννης πίνει φραπέ, τρώει γύρο κάθε μέρα και λέει «είναι η μεσογειακή διατροφή».",
+    "languageCode": "el",
+    "difficulty": "easy",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "Biz kelimeye çok ek koyarız ki, çevirmenler bir cümleyi anlamak için nefes darlığı çeker.",
+    "languageCode": "tr",
+    "difficulty": "easy",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Dünyanın sonu gelse bile, bir Türk mutlaka önce çay demler.",
+    "languageCode": "tr",
+    "difficulty": "easy",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "La nostra lingua non si parla con la bocca, ma richiede l'uso delle mani.",
+    "languageCode": "it",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "Mettere l'ananas sulla pizza non è considerato un semplice errore culinario, ma un crimine contro l'umanità.",
+    "languageCode": "it",
+    "difficulty": "easy",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "نكتب من اليمين إلى اليسار ونتجاهل حروف العلة، لنجعل القراءة مغامرة.",
+    "languageCode": "ar",
+    "difficulty": "easy",
+    "languageFamily": "semicki"
+  },
+  {
+    "id": 4,
+    "content": "كل حوار يجب أن يتضمن عرض الطعام خمس مرات على الأقل، والرفض ممنوع.",
+    "languageCode": "ar",
+    "difficulty": "easy",
+    "languageFamily": "semicki"
+  },
+  {
+    "id": 3,
+    "content": "私たちは電話で話している時でも、無意識に何度も深くお辞儀をしてしまいます。",
+    "languageCode": "ja",
+    "difficulty": "easy",
+    "languageFamily": "japoska"
+  },
+  {
+    "id": 4,
+    "content": "ひらがな、カタカナ、漢字を混ぜて使うのは、外国人を混乱させるための秘密のテストです。",
+    "languageCode": "ja",
+    "difficulty": "easy",
+    "languageFamily": "japoska"
+  },
+  {
+    "id": 3,
+    "content": "Svenska låter alltid som att vi sjunger ramsa, även när vi pratar om skatter.",
+    "languageCode": "sv",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Vi älskar personligt utrymme att vi står två meter ifrån varandra när vi väntar på bussen.",
+    "languageCode": "sv",
+    "difficulty": "easy",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Vores udtale lyder som om vi har en meget varm kartoffel i munden.",
+    "languageCode": "da",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Vi kurerer vejret ved at tænde stearinlys og kalde det \"hygge\".",
+    "languageCode": "da",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Vi puster kraftigt indad mens vi siger \"ja\", så udlændinge tror vi gisper.",
+    "languageCode": "no",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Så længe vi har brunost og kan gå på ski, er alt perfekt.",
+    "languageCode": "no",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Onze harde 'G' klinkt alsof we onze keel schrapen en een keelziekte genezen.",
+    "languageCode": "nl",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Een tikkie sturen voor 30 cent is de ultieme uiting van onze efficiëntie.",
+    "languageCode": "nl",
+    "difficulty": "medium",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Jsme hrdí na to, že dokážeme vytvořit větu bez samohlásek, jen abychom potrápili cizince.",
+    "languageCode": "cs",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Pivo je levnější než voda, takže pitný režim je ekonomické rozhodnutí.",
+    "languageCode": "cs",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Znieme ako Češi, akoby sme každé slovo obalili do cukrovej vaty.",
+    "languageCode": "sk",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Akýkoľvek problém sa tu dá zaručene vyliečiť domácou borovičkou.",
+    "languageCode": "sk",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Наша мова така співуча, що навіть сварка звучить як оперна арія.",
+    "languageCode": "uk",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Немає проблеми, яку не можна було б вирішити за тарілкою гарячого борщу з салом.",
+    "languageCode": "uk",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Ние кимаме за \"не\" и въртим глава за \"да\", оставяйки целия свят в объркване.",
+    "languageCode": "bg",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Всяка вечеря започва с ракия, иначе не се брои за хранене.",
+    "languageCode": "bg",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Suntem o insulă latină, aşa că vorbim ca italienii, dar bem ca ruşii.",
+    "languageCode": "ro",
+    "difficulty": "medium",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "Mâncăm atât de mult usturoi, vampirii ne evită cu desăvârşire.",
+    "languageCode": "ro",
+    "difficulty": "medium",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "Meillä on 15 sijamuotoa, miksi käyttää prepositioita, kun voi luoda pitkiä sanoja?",
+    "languageCode": "fi",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 4,
+    "content": "Hiljaisuus ei ole meille kiusallista; se on täydellinen hetki juoda kahvia.",
+    "languageCode": "fi",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 3,
+    "content": "A nyelvünk annyira logikus, hogy a külföldiek szerint egyenesen a Marsról jöttünk.",
+    "languageCode": "hu",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 4,
+    "content": "Nincs olyan, amit ne lehetne drasztikusan feljavítani egy nagy kanál pirospaprikával.",
+    "languageCode": "hu",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 3,
+    "content": "Mūsų kalba tokia archajiška, kad lingvistai ją tyrinėja kaip muziejaus eksponatą.",
+    "languageCode": "lt",
+    "difficulty": "medium",
+    "languageFamily": "baltyckie"
+  },
+  {
+    "id": 4,
+    "content": "Vasarą gyvename šaltibarščiais, o krepšinis mums atstoja religiją.",
+    "languageCode": "lt",
+    "difficulty": "medium",
+    "languageFamily": "baltyckie"
+  },
+  {
+    "id": 3,
+    "content": "Mēs lepni pievienojam burtu \"s\" beigās, lai tie izklausītos latviski.",
+    "languageCode": "lv",
+    "difficulty": "medium",
+    "languageFamily": "baltyckie"
+  },
+  {
+    "id": 4,
+    "content": "Īsts latvietis kļūst laimīgs tikai tad, kad klusumā sēņo dziļā mežā.",
+    "languageCode": "lv",
+    "difficulty": "medium",
+    "languageFamily": "baltyckie"
+  },
+  {
+    "id": 3,
+    "content": "한글은 너무 과학적이라서 점심 먹기 전에는 다 읽을 수 있습니다.",
+    "languageCode": "ko",
+    "difficulty": "medium",
+    "languageFamily": "koreaska"
+  },
+  {
+    "id": 4,
+    "content": "우리는 항상 \"밥 먹었어?\"라고 묻고, 모든 식사에는 반드시 김치가 있어야 합니다.",
+    "languageCode": "ko",
+    "difficulty": "medium",
+    "languageFamily": "koreaska"
+  },
+  {
+    "id": 3,
+    "content": "Tiếng Việt có sáu thanh điệu, nên bạn có thể hát hoàn chỉnh chỉ bằng cách nói một câu bình thường.",
+    "languageCode": "vi",
+    "difficulty": "medium",
+    "languageFamily": "austroazjatycki"
+  },
+  {
+    "id": 4,
+    "content": "Giải quyết nạn kẹt xe bằng xe máy và ăn phở vỉa hè là nghệ thuật của chúng tôi.",
+    "languageCode": "vi",
+    "difficulty": "medium",
+    "languageFamily": "austroazjatycki"
+  },
+  {
+    "id": 3,
+    "content": "ما با تعارف کردن می‌توانیم ده دقیقه بایستیم و التماس کنیم که اول شما بفرمایید.",
+    "languageCode": "fa",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "زبان فارسی آنقدر شاعرانه است که حتی خریدن نان هم شبیه به خواندن به نظر می‌رسد.",
+    "languageCode": "fa",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "การเติมคำว่า \"ครับ\" หรือ \"ค่ะ\" ท้ายประโยคทำให้ทุกอย่างฟังดูสุภาพ",
+    "languageCode": "th",
+    "difficulty": "medium",
+    "languageFamily": "tai-kadai"
+  },
+  {
+    "id": 4,
+    "content": "คนไทยสามารถกินของเผ็ดจนน้ำตาไหล แล้วบอกฝรั่ง \"ไม่เผ็ดเลย สบายมาก\"",
+    "languageCode": "th",
+    "difficulty": "medium",
+    "languageFamily": "tai-kadai"
+  },
+  {
+    "id": 3,
+    "content": "Mahilig kaming ulitin ang mga salita, kaya mayroon kaming \"halo-halo\" at \"kili-kili\".",
+    "languageCode": "tl",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 4,
+    "content": "Hindi namin kailangan ng daliri para ituro, sapat na ang pagnguso ng aming mga labi.",
+    "languageCode": "tl",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 3,
+    "content": "اردو اتنی میٹھی ہے کہ اس میں کسی کو برا بھلا کہنا بھی غزل کا شعر لگتا ہے۔",
+    "languageCode": "ur",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "ہم ہر خوشی، غمی یا بحث کا اختتام گرما گرم چائے کے کپ پر کرتے ہیں۔",
+    "languageCode": "ur",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "বাংলা ভাষা এতই মিষ্টি যে মনে হয় প্রতিটি শব্দ তৈরি করা হয়েছে।",
+    "languageCode": "bn",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "বাঙালির মাছের ঝোল দিয়ে আর শেষ হয় আড্ডা আর মিষ্টি দই খেয়ে।",
+    "languageCode": "bn",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "हम अपना सिर ऐसे हिलाते हैं कि विदेशियों को समझ नहीं आता कि हम हाँ कह रहे हैं या ना।",
+    "languageCode": "hi",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "हमारी असल जिंदगी में भी बॉलीवुड फिल्मों जैसा ड्रामा और भावनाएं भरी होती हैं।",
+    "languageCode": "hi",
+    "difficulty": "medium",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "Kami tambah perkataan \"lah\" di hujung setiap ayat untuk jadikan ia mesra.",
+    "languageCode": "ms",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 4,
+    "content": "Tidak kira masa atau cuaca, Nasi Lemak sentiasa menjadi jawapan yang betul untuk soalan.",
+    "languageCode": "ms",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 3,
+    "content": "සිංහල අකුරු හරියට වගේ, ලියන්න ගියාම චිත්‍ර අඳිනවා වගේ දැනෙනවා.",
+    "languageCode": "si",
+    "difficulty": "medium",
+    "languageFamily": "drawidyjski"
+  },
+  {
+    "id": 4,
+    "content": "අපි දවසට කීප සැරයක් උණු තේ බොන එක කවදාවත් නවත්වන්නේ නැහැ.",
+    "languageCode": "si",
+    "difficulty": "medium",
+    "languageFamily": "drawidyjski"
+  },
+  {
+    "id": 3,
+    "content": "Kami menggunakan \"wkwkwk\" saat tertawa di internet, yang membuat orang asing bingung.",
+    "languageCode": "id",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 4,
+    "content": "Indomie goreng bukanlah sekadar mi instan biasa, melainkan pahlawan akhir bulan.",
+    "languageCode": "id",
+    "difficulty": "medium",
+    "languageFamily": "austronezyjski"
+  },
+  {
+    "id": 3,
+    "content": "אנחנו כותבים מימין לשמאל ופשוט מנחשים איך לקרוא את המילים לפי ההקשר.",
+    "languageCode": "he",
+    "difficulty": "medium",
+    "languageFamily": "semicki"
+  },
+  {
+    "id": 4,
+    "content": "חוצפה וויכוחים קולניים הם לא מריבה, אלא הדרך הלאומית שלנו לתקשר.",
+    "languageCode": "he",
+    "difficulty": "medium",
+    "languageFamily": "semicki"
+  },
+  {
+    "id": 3,
+    "content": "ჩვენ შეგვიძლია დავწეროთ სიტყვა და სრულიად არ გაგვიჭირდეს მისი წარმოთქმა.",
+    "languageCode": "ka",
+    "difficulty": "medium",
+    "languageFamily": "kartwelska"
+  },
+  {
+    "id": 4,
+    "content": "ქართული სუფრა არ მთავრდება მანამ, სანამ თამადა არ იტყვის სადღეგრძელოს ადამიანისთვის.",
+    "languageCode": "ka",
+    "difficulty": "medium",
+    "languageFamily": "kartwelska"
+  },
+  {
+    "id": 3,
+    "content": "Пишемо ћирилицом, али можемо и латиницом, само да бисмо показали.",
+    "languageCode": "sr",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Инат је наше најјаче гориво, а домаћа ракија лечи све.",
+    "languageCode": "sr",
+    "difficulty": "medium",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Meil on sõnu, kus on neli täishäälikut järjest, mis kõlavad nagu ohkamine.",
+    "languageCode": "et",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 4,
+    "content": "Kaks eestlast tunnevad end kõige mugavamalt siis, kui nad räägivad ja ei looge silmsidet.",
+    "languageCode": "et",
+    "difficulty": "medium",
+    "languageFamily": "ugrofinskie"
+  },
+  {
+    "id": 3,
+    "content": "Наша мова гучыць як неверагодна меладычная сумесь рускай і польскай.",
+    "languageCode": "be",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Беларуса можна зрабіць самым шчаслівым, проста пачаставаўшы яго порцыяй гарачых дранікаў.",
+    "languageCode": "be",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Türkmen dilinde gepleşmek, tıpkı owadan haly dokamak ýaly.",
+    "languageCode": "tk",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 4,
+    "content": "Myhman gelse, ilki bilen çaý hödürlemek biziň iň uly we üýtgewsiz däbimizdir.",
+    "languageCode": "tk",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 3,
+    "content": "Кыргыз тили тоолордун шамалындай эркин жана угулат.",
+    "languageCode": "ky",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 4,
+    "content": "Жайлоодо боз үйдө отуруп, жегенден артык эч нерсе жок.",
+    "languageCode": "ky",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 3,
+    "content": "Мо бо забони форсӣ гап мезанем, аммо бо ҳарфҳои кириллӣ менависем, ҳайрон мекунад.",
+    "languageCode": "tg",
+    "difficulty": "hard",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "Дар ҳар як тӯй палав бояд он қадар зиёд бошад, ки як лашкарро сер кунад.",
+    "languageCode": "tg",
+    "difficulty": "hard",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "O'zbek tilida gaplashganda shunday shirin suhbat bo'ladiki, bilmay qolasiz.",
+    "languageCode": "uz",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 4,
+    "content": "Mehmon kelganda, bizning tilla tishli tabassumimiz va doim tayyor.",
+    "languageCode": "uz",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 3,
+    "content": "ພາສາລາວຟັງເບິ່ງຄືສຽງເພງທີ່ນຸ້ມນວນ, ເຮັດໃຫ້ຄົນຟັງຮູ້ສຶກສະບາຍໃຈ.",
+    "languageCode": "lo",
+    "difficulty": "hard",
+    "languageFamily": "tai-kadai"
+  },
+  {
+    "id": 4,
+    "content": "ທຸກໆບັນຫາໃນຊີວິດສາມາດແກ້ໄຂໄດ້ດ້ວຍຄຳວ່າ \"ບໍ່ເປັນຫຍັງ\" ແລະ ເຂົ້າໜຽວປั้นໜຶ່ງ.",
+    "languageCode": "lo",
+    "difficulty": "hard",
+    "languageFamily": "tai-kadai"
+  },
+  {
+    "id": 3,
+    "content": "Қазақ тілі сөздері аттың тұяғының дүрсүліндей естіледі.",
+    "languageCode": "kk",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 4,
+    "content": "Біз етті соншалықты көп жейміз, қасқырлардан кейін тұрған шығармыз.",
+    "languageCode": "kk",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 3,
+    "content": "မြန်မာအက္ခရာတွေက ဝိုင်းစက်နေလို့ ရေးရတာ ပန်းချီဆွဲနေရသလိုပါပဲ။",
+    "languageCode": "my",
+    "difficulty": "hard",
+    "languageFamily": "sino-tybetaski"
+  },
+  {
+    "id": 4,
+    "content": "ရေနွေးကြမ်းသောက်ရတာက ကျွန်တော်တို့ရဲ့ အကြိုက်ဆုံး အနားယူချိန်ဖြစ်ပါတယ်။",
+    "languageCode": "my",
+    "difficulty": "hard",
+    "languageFamily": "sino-tybetaski"
+  },
+  {
+    "id": 3,
+    "content": "Մեր այբուբենը այնքան յուրահատուկ և հին է, որ կարծես մոգությամբ եկած լինի:",
+    "languageCode": "hy",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Խորոված պատրաստելը և բախտ գուշակելը մեզ համար ոչ թե հոբբի է, այլ ազգային սպորտ:",
+    "languageCode": "hy",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "नेपाली भाषा सुन्दा यति मीठो लाग्छ कि जस्तो बाँसुरी बजाइरहेको छ।",
+    "languageCode": "ne",
+    "difficulty": "hard",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 4,
+    "content": "हामीलाई दिनमा दुई पटक दाल भात खाएनौं भने नआएको जस्तो महसुס हुन्छ।",
+    "languageCode": "ne",
+    "difficulty": "hard",
+    "languageFamily": "Indoaryjski"
+  },
+  {
+    "id": 3,
+    "content": "ភាសាខ្មែរមានស្រៈនិងព្យញ្ជនៈច្រើនណាស់ ដែលអ្នករៀនត្រូវប្រើពេលដើម្បីចាំ។",
+    "languageCode": "km",
+    "difficulty": "hard",
+    "languageFamily": "austroazjatycki"
+  },
+  {
+    "id": 4,
+    "content": "យើងអាចញ៉ាំប្រហុកជាមួយអ្វីក៏បាន ហើយចាត់ទុកវាជាអាហារដែលឆ្ងាញ់បំផុត។",
+    "languageCode": "km",
+    "difficulty": "hard",
+    "languageFamily": "austroazjatycki"
+  },
+  {
+    "id": 3,
+    "content": "Dilimiz o qədər şirin və poetikdir ki, hər kəlməmiz kimi səslənir.",
+    "languageCode": "az",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 4,
+    "content": "Dünyanın ən böyük problemini belə çay içərək həll edə bilərik.",
+    "languageCode": "az",
+    "difficulty": "hard",
+    "languageFamily": "trukijski"
+  },
+  {
+    "id": 3,
+    "content": "Við höldum fast í fornt tungumál og búum til ný orð bara til að forðast slettur.",
+    "languageCode": "is",
+    "difficulty": "hard",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Það er fullkomlega eðlilegt að trúa smá á álfa, stoppa nýjar vegagerðir.",
+    "languageCode": "is",
+    "difficulty": "hard",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Eis Sprooch kléngt wéi e charmante Mix aus Däitsch a Franséisch, mat e puer Wierder ausgeduecht hunn.",
+    "languageCode": "lb",
+    "difficulty": "hard",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 4,
+    "content": "Mir soen ëmmer \"Moien\" zu jiddereen op der Strooss, well d'Land sou kleng jo muer erëm gesäit.",
+    "languageCode": "lb",
+    "difficulty": "hard",
+    "languageFamily": "germanskie"
+  },
+  {
+    "id": 3,
+    "content": "Níl aon bhaint ag an gcaoi a litrítear na focail lenár dteanga leis an gcaoi a bhfuaimnítear.",
+    "languageCode": "ga",
+    "difficulty": "hard",
+    "languageFamily": "celtycki"
+  },
+  {
+    "id": 4,
+    "content": "Níl aon rud níos fearr ar domhan ná oíche mhaith craic sa phub agus cairde.",
+    "languageCode": "ga",
+    "difficulty": "hard",
+    "languageFamily": "celtycki"
+  },
+  {
+    "id": 3,
+    "content": "Mae ein geiriau mor hir a llawn cytseiniaid nes bod angen dwy anadl pentref.",
+    "languageCode": "cy",
+    "difficulty": "hard",
+    "languageFamily": "celtycki"
+  },
+  {
+    "id": 4,
+    "content": "Rydyn ni'n canu fel angylion ac yn trin rygbi genedlaethol bwyllig.",
+    "languageCode": "cy",
+    "difficulty": "hard",
+    "languageFamily": "celtycki"
+  },
+  {
+    "id": 3,
+    "content": "Si li dius a un català que el seu idioma és només un dialecte del castellà.",
+    "languageCode": "ca",
+    "difficulty": "hard",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 4,
+    "content": "El pa amb tomàquet d'oli d'oliva no és un esmorzar, és una autèntica obra d'art.",
+    "languageCode": "ca",
+    "difficulty": "hard",
+    "languageFamily": "latino"
+  },
+  {
+    "id": 3,
+    "content": "Бидний хэл морин туурай шиг хүчтэй сонсогдож, чөлөөтэй урсдаг.",
+    "languageCode": "mn",
+    "difficulty": "hard",
+    "languageFamily": "mongolska"
+  },
+  {
+    "id": 4,
+    "content": "Өдөр бүр сүүтэй цай ууж, бууз идэхгүй л бол жинхэнэ утгаараа болдоггүй.",
+    "languageCode": "mn",
+    "difficulty": "hard",
+    "languageFamily": "mongolska"
+  },
+  {
+    "id": 3,
+    "content": "E Romani chib si sar jekh phurani gil'i, kaj phiravel pesqe lava sumnal.",
+    "languageCode": "rom",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Kana si amende baxt, o xabe sovlarel amaro ilo thaj e dukh bisterdjol.",
+    "languageCode": "rom",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "Gure hizkuntza Europako zaharrena da, eta inork ez daki nondik datorren.",
+    "languageCode": "eu",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Sagardotegi batean txuleta bat jatea da munduko plazerrik handiena.",
+    "languageCode": "eu",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "Gjuha jonë është aq e veçantë saqë qëndron krejt e vetme në pemën e gjuhëve.",
+    "languageCode": "sq",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 4,
+    "content": "Asgjë nuk bëhet në këtë vend pa pirë ekspres me miqtë gjatë ditës.",
+    "languageCode": "sq",
+    "difficulty": "hard",
+    "languageFamily": "inne"
+  },
+  {
+    "id": 3,
+    "content": "Ние можеме да се расправаме со часови дали ајварот треба да се мачка се јаде со лажица.",
+    "languageCode": "mk",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Нашата граматика е лесна бидејќи немаме падежи, па можеме да се фокусираме.",
+    "languageCode": "mk",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Bosanski jezik je kada kažeš jednu riječ, a svi znaju da i merak.",
+    "languageCode": "bs",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Deset u pola s lukom i kafa iz fildžana su jedini pravi lijek.",
+    "languageCode": "bs",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Možemo komotno napisati riječ od pet slova bez ijednog samoglasnika, Krk.",
+    "languageCode": "hr",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Kod nas se na običnu kavu ne ide na petnaest minuta, nego se na terasi tri sata.",
+    "languageCode": "hr",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 3,
+    "content": "Imamo posebno dvojino, samo zato da lahko o dveh osebah.",
+    "languageCode": "sl",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
+  },
+  {
+    "id": 4,
+    "content": "Slovenci smo najbolj srečni takrat, ko v nedeljo zjutraj osvojimo hrib kozarec vina.",
+    "languageCode": "sl",
+    "difficulty": "hard",
+    "languageFamily": "slowianskie"
   }
 ]

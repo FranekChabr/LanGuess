@@ -17,10 +17,25 @@ interface Achievement {
     unlockedAt: string;
 }
 
-// Preset avatar seeds for DiceBear API
-const AVATAR_SEEDS = [
-    'Felix', 'Aneka', 'Zack', 'Midnight', 'Sam', 
-    'Luna', 'Jack', 'Molly', 'Bear', 'Bandit'
+// Local static avatars included in the public folder
+const LOCAL_AVATARS = [
+    '/avatars/04-m3d292ju.jpg',
+    '/avatars/0d5c528538304b10b0bbdbce988dd1c9~tplv-jj85edgx6n-image-origin.jpeg',
+    '/avatars/117231dd-81e7-4b5a-bce4-4d7bd94733e0.jfif',
+    '/avatars/2a183821-03c4-437e-8f55-83561dda8eb2.jfif',
+    '/avatars/3df57deb-8306-48cf-bfbc-450750fecb3d.jfif',
+    '/avatars/453dd6a1bbbe8e420ef98ae1174fafb1.jpg',
+    '/avatars/4880323b-0167-473e-a882-ecc0603f67eb.jfif',
+    '/avatars/5f0904c863bf4f23b0b8adc6c85a311c~tplv-jj85edgx6n-image-medium.jpeg',
+    '/avatars/6a1e2aa2-168d-4f09-ba43-e8845e8a388f.jfif',
+    '/avatars/7ef7d5e0-5340-484e-9fd9-a2160f3e14b7.jfif',
+    '/avatars/8e33317f-0c67-4a34-b886-ebe249ca8700.jfif',
+    '/avatars/a0a448fa31424c72a8023ba7b91970a0~tplv-jj85edgx6n-image-medium.jpeg',
+    '/avatars/b274b7c3-9f9b-459f-9112-f31657c29526.jfif',
+    '/avatars/e44b4b35-607f-4ce3-93f3-0bca21c08d43.jfif',
+    '/avatars/e93880d9-14d4-464f-b855-fb1357330804.jfif',
+    '/avatars/f784c877-64a8-4d8c-b0a3-9310df21fb05.jfif',
+    '/avatars/yamal.jpeg'
 ];
 
 export default function ProfilePage() {
@@ -65,9 +80,8 @@ export default function ProfilePage() {
         }
     }, [session?.user?.id]);
 
-    // Update local state when session loads
-    const getAvatarUrl = (seed: string) => 
-        `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4`;
+    // Provide a default local avatar instead of generating via Dicebear
+    const getAvatarUrl = (seed: string) => seed === 'placeholder' ? LOCAL_AVATARS[0] : seed;
 
     // Only update state from session if user hasn't typed anything yet (init)
     // or if the session update confirmed our saved changes
@@ -227,19 +241,18 @@ export default function ProfilePage() {
                             </label>
                             
                             <div className="grid grid-cols-4 lg:grid-cols-5 gap-3">
-                                {AVATAR_SEEDS.map((seed) => {
-                                    const url = getAvatarUrl(seed);
+                                {LOCAL_AVATARS.map((url, index) => {
                                     return (
                                         <button
-                                            key={seed}
+                                            key={index}
                                             onClick={() => setSelectedAvatar(url)}
                                             className={`
                                                 relative w-full aspect-square rounded-full overflow-hidden border-2 transition-all hover:scale-110 active:scale-95
                                                 ${selectedAvatar === url ? 'border-[#8BC34A] ring-2 ring-[#8BC34A] ring-offset-2' : 'border-gray-100 hover:border-[#8BC34A]/50'}
                                             `}
-                                            title={seed}
+                                            title={`Awatar ${index + 1}`}
                                         >
-                                            <img src={url} alt={seed} className="w-full h-full object-cover" />
+                                            <img src={url} alt={`Awatar ${index + 1}`} className="w-full h-full object-cover" />
                                         </button>
                                     );
                                 })}

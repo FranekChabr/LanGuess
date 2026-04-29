@@ -10,11 +10,13 @@ import { z } from 'zod';
 export type GameLevel = 'easy' | 'medium' | 'hard' | 'intermediate' | 'expert';
 
 export interface Question {
+    id: number;
     sentence: string;
     correctLanguage: string;
 }
 
 const N8nResponseSchema = z.object({
+    id: z.number().optional(),
     sentence: z.string(),
     correctLanguage: z.string(),
 });
@@ -43,7 +45,7 @@ export class QuestionService {
      * @param gameLevel - The game level (easy, medium, hard, intermediate, expert)
      * @param excludedLanguages - Array of language codes to exclude
      */
-    static async getQuestionByGameLevel(gameLevel: GameLevel, excludedLanguages: string[] = []): Promise<Question> {
+    static async getQuestionByGameLevel(gameLevel: GameLevel, excludedLanguages: string[] = [], excludedSentenceIds: number[] = []): Promise<Question> {
         const source = process.env.QUESTION_SOURCE || 'local';
         const difficulties = GAME_LEVEL_DIFFICULTIES[gameLevel];
 
@@ -53,7 +55,7 @@ export class QuestionService {
             return this.fetchFromN8n(randomDifficulty);
         }
 
-        return this.fetchFromLocalMultiDifficulty(difficulties, excludedLanguages);
+        return this.fetchFromLocalMultiDifficulty(difficulties, excludedLanguages, excludedSentenceIds);
     }
 
     /**
@@ -61,25 +63,27 @@ export class QuestionService {
      * @param difficulty - The difficulty level
      * @param excludedLanguages - Array of language codes to exclude (already used in session)
      */
-    static async getQuestion(difficulty: Difficulty, excludedLanguages: string[] = []): Promise<Question> {
+    static async getQuestion(difficulty: Difficulty, excludedLanguages: string[] = [], excludedSentenceIds: number[] = []): Promise<Question> {
         const source = process.env.QUESTION_SOURCE || 'local';
 
         if (source === 'n8n') {
             return this.fetchFromN8n(difficulty);
         }
 
-        return this.fetchFromLocal(difficulty, excludedLanguages);
+        return this.fetchFromLocal(difficulty, excludedLanguages, excludedSentenceIds);
     }
 
     /**
      * Fetch a random sentence from local database matching multiple difficulties
      * @param difficulties - Array of difficulty levels to include
      * @param excludedLanguages - Array of language codes to exclude
+     * @param excludedSentenceIds - Array of sentence IDs to exclude from previous games / rounds
      */
-    private static async fetchFromLocalMultiDifficulty(difficulties: Difficulty[], excludedLanguages: string[] = []): Promise<Question> {
+    private static async fetchFromLocalMultiDifficulty(difficulties: Difficulty[], excludedLanguages: string[] = [], excludedSentenceIds: number[] = []): Promise<Question> {
         // Fetch all sentences matching any of the difficulties
         const availableSentences = await db
             .select({
+                id: sentences.id,
                 content: sentences.content,
                 languageCode: sentences.languageCode,
             })
@@ -92,15 +96,28 @@ export class QuestionService {
             );
         }
 
-        // Filter out excluded languages
-        let filteredSentences = excludedLanguages.length > 0
-            ? availableSentences.filter((s) => !excludedLanguages.includes(s.languageCode))
-            : availableSentences;
+        let filteredSentences = availableSentences;
+        // Filter out excluded sentences
+        if (excludedSentenceIds.length > 0) {
+            filteredSentences = filteredSentences.filter(s => !excludedSentenceIds.includes(s.id));
+        }
 
-        // If all languages used, reset and pick from full pool
+        // Filter out excluded languages
+        if (excludedLanguages.length > 0) {
+            filteredSentences = filteredSentences.filter((s) => !excludedLanguages.includes(s.languageCode));
+        }
+
+        // If all sentences matching diff and language restrictions are used
         if (filteredSentences.length === 0) {
-            console.log('All languages used, resetting exclusions');
-            filteredSentences = availableSentences;
+            // First try resetting language exclusions, but keeping sentence exclusions
+            console.log('Language pool exhausted, keeping sentence exclusions but ignoring language exclusions');
+            filteredSentences = availableSentences.filter(s => !excludedSentenceIds.includes(s.id));
+
+            if (filteredSentences.length === 0) {
+                 // Even sentence exclusions exhausted the pool
+                 console.log('Sentence pool also exhausted, picking fully random fallback');
+                 filteredSentences = availableSentences;
+            }
         }
 
         // Pick random sentence
@@ -108,6 +125,7 @@ export class QuestionService {
         const selected = filteredSentences[randomIndex];
 
         return {
+            id: selected.id,
             sentence: selected.content,
             correctLanguage: selected.languageCode,
         };
@@ -118,87 +136,51 @@ export class QuestionService {
      * Excludes languages that have already been used in the current session
      * @param difficulty - The difficulty level
      * @param excludedLanguages - Array of language codes to exclude
+     * @param excludedSentenceIds - Array of sentence IDs to exclude
      */
-    private static async fetchFromLocal(difficulty: Difficulty, excludedLanguages: string[] = []): Promise<Question> {
-        // Build query with exclusions
-        let query = db
+    private static async fetchFromLocal(difficulty: Difficulty, excludedLanguages: string[] = [], excludedSentenceIds: number[] = []): Promise<Question> {
+        // We will just do a load into memory for excluded lists to keep semantic simpler 
+        // similar to fetchFromLocalMultiDifficulty
+        const availableSentences = await db
             .select({
+                id: sentences.id,
                 content: sentences.content,
                 languageCode: sentences.languageCode,
             })
             .from(sentences)
             .where(eq(sentences.difficulty, difficulty));
 
-        // If we have excluded languages, filter them out
-        if (excludedLanguages.length > 0) {
-            const availableSentences = await db
-                .select({
-                    content: sentences.content,
-                    languageCode: sentences.languageCode,
-                })
-                .from(sentences)
-                .where(eq(sentences.difficulty, difficulty));
+        if (availableSentences.length === 0) {
+             throw new Error(`No sentences found for difficulty: ${difficulty}.`);
+        }
 
-            // Filter out excluded languages
-            const filteredSentences = availableSentences.filter(
-                (s) => !excludedLanguages.includes(s.languageCode)
-            );
+        let filteredSentences = availableSentences;
+        
+        if (excludedSentenceIds.length > 0) {
+            filteredSentences = filteredSentences.filter(s => !excludedSentenceIds.includes(s.id));
+        }
+
+        if (excludedLanguages.length > 0) {
+            filteredSentences = filteredSentences.filter(s => !excludedLanguages.includes(s.languageCode));
+        }
+
+        if (filteredSentences.length === 0) {
+            console.log('Filters exhausted pool, discarding language constraints');
+            filteredSentences = availableSentences.filter(s => !excludedSentenceIds.includes(s.id));
 
             if (filteredSentences.length === 0) {
-                // All languages used - reset and pick any
-                console.log('All languages used, resetting exclusions');
-                const randomIndex = Math.floor(Math.random() * availableSentences.length);
-                const selected = availableSentences[randomIndex];
-                
-                if (!selected) {
-                    throw new Error(`No sentences found for difficulty: ${difficulty}.`);
-                }
-
-                return {
-                    sentence: selected.content,
-                    correctLanguage: selected.languageCode,
-                };
+                console.log('Filters exhausted completely, resetting all constraints');
+                filteredSentences = availableSentences;
             }
-
-            // Pick random from filtered
-            const randomIndex = Math.floor(Math.random() * filteredSentences.length);
-            const selected = filteredSentences[randomIndex];
-
-            return {
-                sentence: selected.content,
-                correctLanguage: selected.languageCode,
-            };
         }
 
-        // No exclusions - use optimized offset-based selection
-        const count = await this.getSentenceCount(difficulty);
-
-        if (count === 0) {
-            throw new Error(
-                `No sentences found for difficulty: ${difficulty}. Please add sentences to the database.`
-            );
-        }
-
-        const randomOffset = Math.floor(Math.random() * count);
-
-        const result = await db
-            .select({
-                content: sentences.content,
-                languageCode: sentences.languageCode,
-            })
-            .from(sentences)
-            .where(eq(sentences.difficulty, difficulty))
-            .limit(1)
-            .offset(randomOffset);
-
-        if (result.length === 0) {
-            this.sentenceCountCache.delete(difficulty);
-            throw new Error(`No sentences found for difficulty: ${difficulty}.`);
-        }
+        const randomIndex = Math.floor(Math.random() * filteredSentences.length);
+        const selected = filteredSentences[randomIndex];
 
         return {
-            sentence: result[0].content,
-            correctLanguage: result[0].languageCode,
+            id: selected.id,
+            sentence: selected.content,
+            correctLanguage: selected.languageCode,
         };
     }
 

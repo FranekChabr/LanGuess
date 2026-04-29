@@ -16,6 +16,7 @@ interface Language {
 }
 
 interface QuestionData {
+    id?: number;
     sentence: string;
     options: Language[];
     correctLanguageCode: string;
@@ -137,20 +138,45 @@ export default function GamePage() {
         setSelectedSuggestionIndex(-1);
 
         try {
+            // Get excluded sentence IDs from localStorage
+            let savedIds: number[] = [];
+            try {
+                const stored = localStorage.getItem('languess_used_sentences');
+                if (stored) savedIds = JSON.parse(stored);
+            } catch (e) {}
+
             // Build URL with excluded languages
-            const excludedParam = usedLanguages.length > 0 
+            const excludedLanguagesParam = usedLanguages.length > 0 
                 ? `&excludedLanguages=${usedLanguages.join(',')}`
                 : '';
-            const response = await fetch(`/api/game/question?level=${gameState.difficulty}${excludedParam}`);
+            const excludedIdsParam = savedIds.length > 0
+                ? `&excludedSentenceIds=${savedIds.join(',')}`
+                : '';
+
+            const response = await fetch(`/api/game/question?level=${gameState.difficulty}${excludedLanguagesParam}${excludedIdsParam}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch question');
             }
-            const data = await response.json();
+            const data: QuestionData = await response.json();
             setQuestion(data);
             
-            // Track the language as used
+            // Track the language as used (during this game session)
             if (data.correctLanguageCode) {
                 setUsedLanguages(prev => [...prev, data.correctLanguageCode]);
+            }
+            
+            // Save the sentence ID to local storage to prevent reuse in future games
+            if (data.id) {
+                try {
+                    let usedIds: number[] = [];
+                    const stored = localStorage.getItem('languess_used_sentences');
+                    if (stored) usedIds = JSON.parse(stored);
+                    
+                    // Keep max 200 history
+                    if (usedIds.length > 200) usedIds.shift();
+                    usedIds.push(data.id);
+                    localStorage.setItem('languess_used_sentences', JSON.stringify(usedIds));
+                } catch (e) {}
             }
         } catch (error) {
             console.error('Error fetching question:', error);

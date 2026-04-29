@@ -1,11 +1,12 @@
 // src/db/seed.ts
 
 import { config } from 'dotenv';
+// Load from .env since .env.local might not exist
+config({ path: '.env' });
 config({ path: '.env.local' });
 
 import fs from 'fs';
 import path from 'path';
-
 import { db } from './index';
 import { sentences } from './schema';
 
