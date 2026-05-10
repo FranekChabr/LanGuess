@@ -1,0 +1,289 @@
+{
+  "name": "Generate Sentence",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "generate",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        944
+      ],
+      "id": "3d18948a-7cf3-41d3-93a7-aa75f0e69972",
+      "name": "Webhook1",
+      "webhookId": "8db99b61-cf63-4206-94b8-0cba262178d0"
+    },
+    {
+      "parameters": {
+        "content": "## Request body:\n```json\n{\n  \"gameId\": \"abc-123\",\n  \"count\": 8,\n  \"languages\": [\"Polish\", \"English\", \"Spanish\"]\n}\n```",
+        "height": 200,
+        "width": 260,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        896
+      ],
+      "typeVersion": 1,
+      "id": "d41763fc-0f77-442f-a22e-a9d132c6b975",
+      "name": "Sticky Note - Request1"
+    },
+    {
+      "parameters": {
+        "content": "## Tworzy tablicę itemów:\npo jednym na każde zdanie,\nz indeksem i listą języków.\nKażdy item przejdzie przez pętlę osobno.",
+        "height": 200,
+        "width": 260,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        144,
+        784
+      ],
+      "typeVersion": 1,
+      "id": "47f47388-4cbf-4e23-8ce4-46be4420cec0",
+      "name": "Sticky Note - Prepare1"
+    },
+    {
+      "parameters": {
+        "content": "## Pętla:\n- output 0 → przetwarza item\n- output 1 → wyjście po przetworzeniu wszystkich",
+        "height": 132,
+        "width": 260,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        448,
+        800
+      ],
+      "typeVersion": 1,
+      "id": "34d34075-3523-4bf8-b667-d9ee72ada673",
+      "name": "Sticky Note - Loop1"
+    },
+    {
+      "parameters": {
+        "content": "## Choose \n## whatever \n## AI model \n## you want",
+        "height": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        1072
+      ],
+      "typeVersion": 1,
+      "id": "c45f73a3-3fd0-4c70-856f-a8513b3957be",
+      "name": "Sticky Note - Model1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nconst count = parseInt(body.count);\nconst languages = body.languages;\nconst gameId = body.gameId;\n\nreturn Array.from({ length: count }, (_, i) => ({\n  json: {\n    gameId: gameId,\n    sentenceIndex: i + 1,\n    totalCount: count,\n    languages: languages\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        944
+      ],
+      "id": "2a311122-d910-4d2e-97ee-2661fdd63d0e",
+      "name": "Prepare items1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        480,
+        944
+      ],
+      "id": "4828c381-34fb-400d-98c6-08e659fbd860",
+      "name": "Loop1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatXAiGrok",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1120
+      ],
+      "id": "b9aa2bcf-df12-4594-b35c-6adbb568dbbf",
+      "name": "Grok1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate sentence number {{ $json.sentenceIndex }} (out of {{ $json.totalCount }} total).\n\nProvide this sentence in the following languages: {{ $json.languages.join(', ') }}.\n\nReturn ONLY a raw JSON object — no markdown, no backticks, no explanation:\n{\n  \"sentenceIndex\": {{ $json.sentenceIndex }},\n  \"translations\": {\n    \"{{ $json.languages[0] }}\": \"<sentence in {{ $json.languages[0] }}>\"\n  }\n}\n\nInclude ALL requested languages as separate keys inside \"translations\".\nMake the sentence natural, varied, and interesting.",
+        "options": {
+          "systemMessage": "You are a multilingual sentence generator. Always return only a raw JSON object with no extra text, no markdown, and no code fences. The JSON must have exactly two keys: sentenceIndex (number) and translations (object with one key per language)."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        944
+      ],
+      "id": "c464685e-965e-4da5-87ab-55d0cc898f73",
+      "name": "Generate sentence1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output.trim();\n\n// Strip markdown fences if the model adds them anyway\nconst clean = raw.replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/i, '').trim();\n\nconst parsed = JSON.parse(clean);\n\n// Flatten translations into top-level fields for easy downstream access\nconst flatItem = {\n  gameId: $input.first().json.gameId,\n  sentenceIndex: parsed.sentenceIndex,\n  ...parsed.translations\n};\n\nreturn [{ json: flatItem }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        944
+      ],
+      "id": "bf57eea4-c913-4528-93a2-2e2be1c69f66",
+      "name": "Parse sentence1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect all items accumulated by the loop\nconst allItems = $input.all();\n\n// Sort by sentenceIndex to guarantee correct order\nconst sorted = allItems\n  .map(item => item.json)\n  .sort((a, b) => a.sentenceIndex - b.sentenceIndex);\n\n// Grab gameId from first item (same for all)\nconst gameId = sorted[0].gameId;\n\n// Detect language keys dynamically (everything except sentenceIndex and gameId)\nconst languages = Object.keys(sorted[0]).filter(k => k !== 'sentenceIndex' && k !== 'gameId');\n\n// Build clean final structure\nconst sentences = sorted.map(item => ({\n  id: item.sentenceIndex,\n  translations: Object.fromEntries(\n    languages.map(lang => [lang, item[lang]])\n  )\n}));\n\nreturn [{\n  json: {\n    gameId: gameId,\n    count: sentences.length,\n    languages: languages,\n    sentences: sentences\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        656
+      ],
+      "id": "7ddd9e10-d73d-458b-a5a5-05224c8be2b6",
+      "name": "Build response1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        720,
+        656
+      ],
+      "id": "135ffc1f-3004-4b9e-912a-c96363d3b144",
+      "name": "Back to app1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Prepare items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare items1": {
+      "main": [
+        [
+          {
+            "node": "Loop1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop1": {
+      "main": [
+        [
+          {
+            "node": "Generate sentence1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grok1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate sentence1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate sentence1": {
+      "main": [
+        [
+          {
+            "node": "Parse sentence1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse sentence1": {
+      "main": [
+        [
+          {
+            "node": "Loop1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build response1": {
+      "main": [
+        [
+          {
+            "node": "Back to app1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "69162ae3-6905-48eb-a33d-cfa07f26669d",
+  "meta": {
+    "instanceId": "0dda387bc27a271de0739869470cc505c2a9945c5161aa9f038feaa66a3d32a1"
+  },
+  "id": "aLowXR6JlFAd89eE",
+  "tags": []
+}
